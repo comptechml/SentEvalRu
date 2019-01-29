@@ -112,5 +112,3 @@ if __name__ == "__main__":
     transfer_tasks = 'SST2'
     # transfer_tasks = 'MRPC'
     results = se.eval(transfer_tasks)
-    print("RESULT:")
-    print(results)
