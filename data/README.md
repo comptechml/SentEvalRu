@@ -19,12 +19,12 @@ Tab separated input files with `s1 | s2 | label` structure. (s1, s2 – sentence
 The system participating in this task should compute *how similar* `s1` and `s2` are, returning a similarity score.
 
 #### SST/dialog-2016 
-Tab separated input files with `id | sentence | label` structure. (s – sentence)
+Tab separated input files with `id | sentence | label` structure. 
 
 The system participating in this task should classify the *polarity* of a given `sentence` at the document — is it positive, negative or neutral.
 
 #### SST/binary 
-Tab separated input files with `sentence | label` structure. (s – sentence)
+Tab separated input files with `sentence | label` structure.
 
 The system participating in this task should classify the *polarity* of a given `sentence` at the document — is it positive or negative.
 
