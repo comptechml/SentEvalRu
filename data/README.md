@@ -7,8 +7,8 @@ SentEval_Ru allows you to evaluate your sentence embeddings as features for the 
 | Task     	| Type                         	| #train 	| #test 	|
 |----------	|------------------------------	|-----------:|:----------:|
 | [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection  | ?k | ?k 
-| [SST](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis  	| ?k     	| ?k   
-| [SST](http://study.mokoron.com/) |binary sentiment analysis  	| ?k     	| ?k   
+| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis  	| ?k     	| ?k   
+| [SST/binary](http://study.mokoron.com/) |binary sentiment analysis  	| ?k     	| ?k   
 
 ---
 In the folder with each task there are datasets presented in *.csv* format. Test datasets contain the following:
