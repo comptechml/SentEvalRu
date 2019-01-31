@@ -1,16 +1,10 @@
-# Copyright (c) 2017-present, Facebook, Inc.
-# All rights reserved.
-#
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
-#
-
 from __future__ import absolute_import, division, unicode_literals
 
 import sys
 import io
 import numpy as np
 import logging
+from math import log2
 
 
 # Set PATHs
@@ -26,7 +20,9 @@ import senteval
 # Create dictionary
 def create_dictionary(sentences, threshold=0):
     words = {}
+    doc_number = 0
     for s in sentences:
+        doc_number += 1
         for word in s:
             words[word] = words.get(word, 0) + 1
 
@@ -47,7 +43,7 @@ def create_dictionary(sentences, threshold=0):
         id2word.append(w)
         word2id[w] = i
 
-    return id2word, word2id
+    return id2word, word2id, doc_number, words
 
 
 # Get word vectors from vocabulary (glove, word2vec, fasttext ..)
@@ -69,9 +65,11 @@ def get_wordvec(path_to_vec, word2id):
 
 # SentEval prepare and batcher
 def prepare(params, samples):
-    _, params.word2id = create_dictionary(samples)
+    _, params.word2id, doc_count, word_count = create_dictionary(samples)
     params.word_vec = get_wordvec(PATH_TO_VEC, params.word2id)
     params.wvec_dim = 300
+    params.doc_count = doc_count
+    params.word_count = word_count
     return
 
 
@@ -83,7 +81,7 @@ def batcher(params, batch):
         sentvec = []
         for word in sent:
             if word in params.word_vec:
-                sentvec.append(params.word_vec[word])
+                sentvec.append(params.word_vec[word] * log2(params.doc_count / params.word_count[word]))
         if not sentvec:
             vec = np.zeros(params.wvec_dim)
             sentvec.append(vec)
