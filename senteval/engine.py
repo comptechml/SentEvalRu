@@ -45,7 +45,7 @@ class SE(object):
         self.batcher = batcher
         self.prepare = prepare if prepare else lambda x, y: None
 
-        self.list_tasks = ['CR', 'MR', 'MPQA', 'SUBJ', 'SST2', 'SST5', 'TREC', 'MRPC',
+        self.list_tasks = ['CR', 'MR', 'MPQA', 'SUBJ', 'SST2', 'SST3', 'SST5', 'TREC', 'MRPC',
                            'SICKRelatedness', 'SICKEntailment', 'STSBenchmark',
                            'SNLI', 'ImageCaptionRetrieval', 'STS12', 'STS13',
                            'STS14', 'STS15', 'STS16',
@@ -72,8 +72,9 @@ class SE(object):
         elif name == 'SUBJ':
             self.evaluation = SUBJEval(tpath + '/downstream/SUBJ', seed=self.params.seed)
         elif name == 'SST2':
-            # self.evaluation = SSTEval(tpath + '/downstream/SST/binary', nclasses=2, seed=self.params.seed)
             self.evaluation = SSTEval(tpath + '/SST/binary', nclasses=2, seed=self.params.seed)
+        elif name == 'SST3':
+            self.evaluation = SSTEval(tpath + '/SST/dialog-2016', nclasses=3, seed=self.params.seed)
         elif name == 'SST5':
             self.evaluation = SSTEval(tpath + '/downstream/SST/fine', nclasses=5, seed=self.params.seed)
         elif name == 'TREC':

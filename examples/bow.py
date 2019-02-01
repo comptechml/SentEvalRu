@@ -110,6 +110,9 @@ if __name__ == "__main__":
     #                   'Length', 'WordContent', 'Depth', 'TopConstituents',
     #                   'BigramShift', 'Tense', 'SubjNumber', 'ObjNumber',
     #                   'OddManOut', 'CoordinationInversion']
-    transfer_tasks = 'SST2'
+
+    # transfer_tasks = ['SS2', 'SST3', 'MRPC']
+    transfer_tasks = 'SST3'
+    # transfer_tasks = 'SST2'
     # transfer_tasks = 'MRPC'
     results = se.eval(transfer_tasks)
