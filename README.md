@@ -4,6 +4,7 @@ Download embedding from http://docs.deeppavlov.ai/en/latest/intro/pretrained_vec
 
 Use bow.py from "/examples" - in the end of the file choose methods you need end run script
 
+Download files for Skip-Thoughts [here](https://drive.google.com/open?id=1JWGnkcfP0eT7IMC_UJt_Azqk5CrDOa5V). (The archive contains 4 files: word2vec embeddings from RDT and 3 files for trained Skip-Thought model. We used for training russian dump of Wikipedia and 1000 iterations)
 # SentEval: evaluation toolkit for sentence embeddings
 
 SentEval is a library for evaluating the quality of sentence embeddings. We assess their generalization power by using them as features on a broad and diverse set of "transfer" tasks. **SentEval currently includes 17 downstream tasks**. We also include a suite of **10 probing tasks** which evaluate what linguistic properties are encoded in sentence embeddings. Our goal is to ease the study and the development of general-purpose fixed-size sentence representations.
