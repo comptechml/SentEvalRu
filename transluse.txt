@@ -1,0 +1,24 @@
+import tensorflow as tf
+import tensorflow_hub as hub
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+import pandas as pd
+import re
+import seaborn as sns
+
+from googletrans import Translator
+translator=Translator()
+module_url = "https://tfhub.dev/google/universal-sentence-encoder/2"
+embed = hub.Module(module_url)
+
+sentence1 = "Тираннозавр Рекс украл мою еду."
+sentence=translator.translate(sentence1)
+messages=[sentence.text]
+with tf.Session() as session:
+  session.run([tf.global_variables_initializer(), tf.tables_initializer()])
+  message_embeddings = session.run(embed(messages))
+ 
+  for i, message_embedding in enumerate(np.array(message_embeddings).tolist()):
+    print("Message: {}".format(messages[i]))
+    print("Embedding: [{}, ...]\n".format(message_embedding))
