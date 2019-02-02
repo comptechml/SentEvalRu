@@ -4,12 +4,14 @@ Read this in other languages: [English](README.md), [Русский](README.ru.m
 
 SentEval_Ru allows you to evaluate your sentence embeddings as features for the following tasks:
 
-| Task     	| Type                         	| #train 	| #test 	|
-|----------	|------------------------------	|-----------:|:----------:|
-| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection  | ?k | ?k 
-| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis  	| ?k     	| ?k   
-| [SST/binary](http://study.mokoron.com/) |binary sentiment analysis  	| ?k     	| ?k   
-
+| Task     	| Type                         	| model |	
+|----------	|------------------------------	|-----------|:----------:|
+| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection | 
+| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis  	|
+| [SST/binary](http://study.mokoron.com/) |binary sentiment analysis  	|
+|[_](https://tatianashavrina.github.io/taiga_site/downloads)| tags classifier |
+|[_](https://tatianashavrina.github.io/taiga_site/downloads)| readability classifier |
+|[_](https://tatianashavrina.github.io/taiga_site/downloads)| rubric classifier  |
 ---
 In the folder with each task there are datasets presented in *.csv* format. Test datasets contain the following:
 
@@ -27,4 +29,3 @@ The system participating in this task should classify the *polarity* of a given 
 Tab separated input files with `sentence | label` structure.
 
 The system participating in this task should classify the *polarity* of a given `sentence` at the document — is it positive or negative.
-
