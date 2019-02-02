@@ -2,5 +2,26 @@
 
 .idea
 senteval/__pycache__
+senteval/tools/__pycache__
 examples/fasttext
 examples/glove
+examples/skip-thoughts-files
+data/MRPC/paraphrases.csv
+data/MRPC/paraphrases_label_0.csv
+data/MRPC/paraphrases_label_0_corrected.csv
+data/MRPC/partition.py
+data/Readability classifier/clean.csv
+data/Readability classifier/nplus_readability.csv
+data/Readability classifier/script.py
+data/Tags classifier/interfax_tag.csv
+data/Tags classifier/script.py
+data/Readability classifier/script.py
+data/SST/binary/convert.py
+data/SST/binary/negatives.csv
+data/SST/binary/positives.csv
+data/SST/dialog-2016/script.py
+data/SST/dialog-2016/dialog2016.csv
+data/Rubric classifier
+data/translated
+data/Poems classifier/script.py
+data/Poems classifier/poems_genre.csv
