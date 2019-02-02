@@ -30,12 +30,9 @@ class STSEval(object):
 
         for dataset in self.datasets:
             sent1, sent2 = zip(*[l.split("\t") for l in
-                               io.open(fpath + '/STS.input.%s.txt' % dataset,
-                                       encoding='utf8').read().splitlines()])
+                               io.open(fpath + '/sts_train_rus.csv', encoding='utf8').read().splitlines()])
             raw_scores = np.array([x for x in
-                                   io.open(fpath + '/STS.gs.%s.txt' % dataset,
-                                           encoding='utf8')
-                                   .read().splitlines()])
+                                   io.open(fpath + '/sts_test_rus.csv', encoding='utf8').read().splitlines()])
             not_empty_idx = raw_scores != ''
 
             gs_scores = [float(x) for x in raw_scores[not_empty_idx]]
@@ -153,9 +150,9 @@ class STSBenchmarkEval(SICKRelatednessEval):
     def __init__(self, task_path, seed=1111):
         logging.debug('\n\n***** Transfer task : STSBenchmark*****\n\n')
         self.seed = seed
-        train = self.loadFile(os.path.join(task_path, 'sts-train.csv'))
-        dev = self.loadFile(os.path.join(task_path, 'sts-dev.csv'))
-        test = self.loadFile(os.path.join(task_path, 'sts-test.csv'))
+        train = self.loadFile(os.path.join(task_path, 'sts_train.csv'))
+        dev = self.loadFile(os.path.join(task_path, 'sts_dev.csv'))
+        test = self.loadFile(os.path.join(task_path, 'sts_test.csv'))
         self.sick_data = {'train': train, 'dev': dev, 'test': test}
 
     def loadFile(self, fpath):

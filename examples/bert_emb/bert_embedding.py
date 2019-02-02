@@ -8,8 +8,8 @@ import json
 
 
 # Set PATHs
-PATH_TO_SENTEVAL = '../'
-PATH_TO_DATA = '../data'
+PATH_TO_SENTEVAL = '../../'
+PATH_TO_DATA = '../../data'
 
 # import SentEval
 sys.path.insert(0, PATH_TO_SENTEVAL)
@@ -18,14 +18,11 @@ import senteval
 
 # SentEval prepare and batcher
 def prepare(params, samples):
-    """ Сделать что-нибудь с обучающей выборкой, если нужно. Если нет - не писать ничего.
-    Также эта функция может добавить что-нибудь в параметры, которые использует SentEval """
     # Some code
     return
 
 
 def batcher(params, batch):
-
 #    batch = [sent if sent != [] else ['.'] for sent in batch]
     embeddings = []
    

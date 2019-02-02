@@ -102,14 +102,26 @@ params_senteval['classifier'] = {'nhid': 0, 'optim': 'rmsprop', 'batch_size': 12
 # Set up logger
 logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
+
+def check():
+    se = senteval.engine.SE(params_senteval, batcher, prepare)
+    # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
+    transfer_tasks = 'SST2'
+    results =  se.eval(transfer_tasks)
+    return results
+
+
 if __name__ == "__main__":
     se = senteval.engine.SE(params_senteval, batcher, prepare)
-    # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'RubricCl', 'TagCl']
+    # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
 
     # transfer_tasks = 'ReadabilityCl'
     # transfer_tasks = 'TagCl'
     # transfer_tasks = 'SST2'
     # transfer_tasks = 'MRPC'
-    transfer_tasks = 'PoemsCl'
+    # transfer_tasks = 'PoemsCl'
+    # transfer_tasks = 'ProzaCl'
+    # transfer_tasks = 'SICK'
+    # transfer_tasks = 'STS'
 
     results = se.eval(transfer_tasks)

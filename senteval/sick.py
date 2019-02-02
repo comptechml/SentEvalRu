@@ -26,9 +26,9 @@ class SICKRelatednessEval(object):
     def __init__(self, task_path, seed=1111):
         logging.debug('***** Transfer task : SICK-Relatedness*****\n\n')
         self.seed = seed
-        train = self.loadFile(os.path.join(task_path, 'SICK_train.txt'))
-        dev = self.loadFile(os.path.join(task_path, 'SICK_trial.txt'))
-        test = self.loadFile(os.path.join(task_path, 'SICK_test_annotated.txt'))
+        train = self.loadFile(os.path.join(task_path, 'sick_train.csv'))
+        dev = self.loadFile(os.path.join(task_path, 'sick_dev.csv'))
+        test = self.loadFile(os.path.join(task_path, 'sick_test.csv'))
         self.sick_data = {'train': train, 'dev': dev, 'test': test}
 
     def do_prepare(self, params, prepare):

@@ -1,2 +1,0 @@
-Universal Sentence Encoder with translator пользуетс€ уже предобученной моделью, которую можно найти на https://tfhub.dev/google/universal-sentence-encoder/2
-Ќа вход алгоритм получает матрицу из предложений на русском, затем с помощью yandex.Translater переводит на английский и создает вектор с помощью указанной выше модели.
