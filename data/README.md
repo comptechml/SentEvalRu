@@ -11,7 +11,6 @@ SentEval_Ru allows you to evaluate your sentence embeddings as features for the 
 | [SST/binary](http://study.mokoron.com/) |binary sentiment analysis  	||
 |[_](https://tatianashavrina.github.io/taiga_site/downloads)| tags classifier ||
 |[_](https://tatianashavrina.github.io/taiga_site/downloads)| readability classifier ||
-|[_](https://tatianashavrina.github.io/taiga_site/downloads)| rubric classifier  ||
 | [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (translated to Russian) | question-type classification 	|| 
 | [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (translated to Russian) | natural language inference ||
 ---
