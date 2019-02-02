@@ -23,3 +23,5 @@ data/SST/dialog-2016/script.py
 data/SST/dialog-2016/dialog2016.csv
 data/Rubric classifier
 data/translated
+data/Poems classifier/script.py
+data/Poems classifier/poems_genre.csv

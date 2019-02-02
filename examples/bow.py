@@ -107,7 +107,9 @@ if __name__ == "__main__":
     # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'RubricCl', 'TagCl']
 
     # transfer_tasks = 'ReadabilityCl'
-    transfer_tasks = 'TagCl'
+    # transfer_tasks = 'TagCl'
     # transfer_tasks = 'SST2'
     # transfer_tasks = 'MRPC'
+    transfer_tasks = 'PoemsCl'
+
     results = se.eval(transfer_tasks)

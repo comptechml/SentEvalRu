@@ -37,7 +37,7 @@ class SE(object):
         self.batcher = batcher
         self.prepare = prepare if prepare else lambda x, y: None
 
-        self.list_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'RubricCl', 'TagCl']
+        self.list_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'RubricCl', 'TagCl', 'PoemsCl']
 
     def eval(self, name):
         # evaluate on evaluation [name], either takes string or list of strings
@@ -58,6 +58,8 @@ class SE(object):
             self.evaluation = SSTEval(tpath + '/Rubric classifier', 'rubric classifier', nclasses=93, seed=self.params.seed)
         elif name == 'TagCl':
             self.evaluation = SSTEval(tpath + '/Tags classifier', 'tag classifier', nclasses=6961, seed=self.params.seed)
+        elif name == 'PoemsCl':
+            self.evaluation = SSTEval(tpath + '/Poems classifier', 'poems classifier', nclasses=33, seed=self.params.seed)
 
         # if name == 'CR':
         #     self.evaluation = CREval(tpath + '/downstream/CR', seed=self.params.seed)

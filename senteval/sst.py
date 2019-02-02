@@ -23,11 +23,9 @@ class SSTEval(object):
     def __init__(self, task_path, task_name, nclasses=2, seed=1111):
         self.seed = seed
 
-        # binary or fine-grained
         self.nclasses = nclasses
         self.task_name = task_name
-        #self.task_name = 'Binary' if self.nclasses == 2 else 'Fine-Grained'
-        logging.debug('***** Transfer task : SST %s classification *****\n\n', self.task_name)
+        logging.debug('***** Transfer task :%s *****\n\n', self.task_name)
 
         train = self.loadFile(os.path.join(task_path, 'train.csv'))
         dev = self.loadFile(os.path.join(task_path, 'dev.csv'))
