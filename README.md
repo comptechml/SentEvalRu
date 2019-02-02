@@ -1,9 +1,10 @@
-# What is it and why is it?
+Read this in other languages: [English](README.md), [Русский](README.ru.md)
 
+# What is it and why is it?
 
 SentEvalRu is a library for evaluating the quality of sentence embeddings for russian texts. We assess their generalization power by using them as features on a broad and diverse set of *tasks*.
 
-Our goal is to evaluate the algorithms, intended mostly for the English language, for Russian — prepare datasets and training models. As part of the project, we were limited in time, so it was decided to use the library [SentEval](https://arxiv.org/abs/1803.05449) as a benchmark.
+Our goal is to evaluate the algorithms, intended mostly for the English language, to Russian — prepare datasets and training models. As part of the project, we were limited in time, so it was decided to use the library [SentEval](https://arxiv.org/abs/1803.05449) as a benchmark.
 
 ## Development 
 
@@ -12,16 +13,11 @@ This project was made during the [ComptechNsk'19](http://comptech.nsk.su/) winte
 
 ## Tasks (data and models)
 SentEval allows you to evaluate sentence embeddings as features for the following [tasks](\data\README.md)
-| Task     	| Type                         	| model | 
-|----------	|------------------------------	|-----------| 
-| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection | | 
-| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis  	||    
-| [SST/binary](http://study.mokoron.com/) |binary sentiment analysis  	|| 
-|[_](https://tatianashavrina.github.io/taiga_site/downloads)| tags classifier || 
-|[_](https://tatianashavrina.github.io/taiga_site/downloads)| readability classifier || 
-|[_](https://tatianashavrina.github.io/taiga_site/downloads)| rubric classifier  || 
 
 More details on the tasks see **\examples**, more details about task data see **\data**
+
+## System Requirements
+**ATTENTION!** We advise you have more that 4GB RAM for training.
 
 ## Installation
 
