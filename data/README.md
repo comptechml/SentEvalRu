@@ -4,16 +4,15 @@ Read this in other languages: [English](README.md), [Русский](README.ru.m
 
 SentEval_Ru allows you to evaluate your sentence embeddings as features for the following tasks:
 
-| Task     	| Type                         	| model |	
-|----------	|------------------------------	|-----------|:----------:|
-| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection | 
-| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis  	|
-| [SST/binary](http://study.mokoron.com/) |binary sentiment analysis  	|
-|[_](https://tatianashavrina.github.io/taiga_site/downloads)| tags classifier |
-|[_](https://tatianashavrina.github.io/taiga_site/downloads)| readability classifier |
-|[_](https://tatianashavrina.github.io/taiga_site/downloads)| rubric classifier  |
-| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (translated to Russian) | question-type classification 	| 
-| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (translated to Russian) | natural language inference |
+| Task     	| Type                         	| model |
+|----------	|------------------------------	|-----------|
+| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection | |
+| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis  	||
+| [SST/binary](http://study.mokoron.com/) |binary sentiment analysis  	||
+|[Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads)| tags classifier ||
+|[Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads)| readability classifier ||
+| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (translated to Russian) | question-type classification ||
+| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (translated to Russian) | natural language inference ||
 ---
 In the folder with each task there are datasets presented in *.csv* format. Test datasets contain the following:
 
@@ -48,3 +47,11 @@ Read more about [Learning Question Classifiers](http://aclweb.org/anthology/C02-
 Tab separated input files with `s1 | s2 | label` structure. (s1, s2 – sentences)
 
 The system participating in this task should compute *how similar* semantically `s1` and `s2` are, returning a similarity score in range [1..5].
+
+#### STS
+
+#### Genre classification
+
+#### Readability classifier
+
+#### Tags classifier
