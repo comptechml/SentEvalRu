@@ -16,8 +16,6 @@ import logging
 # Set PATHs
 PATH_TO_SENTEVAL = '../'
 PATH_TO_DATA = '../data'
-# PATH_TO_VEC = 'glove/glove.840B.300d.txt' // Eng
-# PATH_TO_VEC = 'fasttext/crawl-300d-2M.vec' // Eng
 PATH_TO_VEC = 'fasttext/ft_native_300_ru_wiki_lenta_nltk_word_tokenize.vec'
 
 # import SentEval
@@ -51,12 +49,14 @@ def create_dictionary(sentences, threshold=0):
 
     return id2word, word2id
 
+
 # Get word vectors from vocabulary (glove, word2vec, fasttext ..)
 def get_wordvec(path_to_vec, word2id):
     word_vec = {}
 
     with io.open(path_to_vec, 'r', encoding='utf-8') as f:
         # if word2vec or fasttext file : skip first line "next(f)"
+        next(f)
         for line in f:
             word, vec = line.split(' ', 1)
             if word in word2id:
@@ -73,6 +73,7 @@ def prepare(params, samples):
     params.word_vec = get_wordvec(PATH_TO_VEC, params.word2id)
     params.wvec_dim = 300
     return
+
 
 def batcher(params, batch):
     batch = [sent if sent != [] else ['.'] for sent in batch]
@@ -103,12 +104,12 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
 if __name__ == "__main__":
     se = senteval.engine.SE(params_senteval, batcher, prepare)
-    # transfer_tasks = ['STS12', 'STS13', 'STS14', 'STS15', 'STS16',
-    #                   'MR', 'CR', 'MPQA', 'SUBJ', 'SST2', 'SST5', 'TREC', 'MRPC',
-    #                   'SICKEntailment', 'SICKRelatedness', 'STSBenchmark',
-    #                   'Length', 'WordContent', 'Depth', 'TopConstituents',
-    #                   'BigramShift', 'Tense', 'SubjNumber', 'ObjNumber',
-    #                   'OddManOut', 'CoordinationInversion']
-    transfer_tasks = 'SST2'
+    # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'RubricCl', 'TagCl']
+
+    # transfer_tasks = 'ReadabilityCl'
+    # transfer_tasks = 'TagCl'
+    # transfer_tasks = 'SST2'
     # transfer_tasks = 'MRPC'
+    transfer_tasks = 'PoemsCl'
+
     results = se.eval(transfer_tasks)
