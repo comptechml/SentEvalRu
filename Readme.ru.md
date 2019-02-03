@@ -43,19 +43,20 @@ Sentence Encoder)](https://arxiv.org/pdf/1803.11175.pdf) и [Bert](https://arxiv
 - тематическое моделирование и т.д.
   
 SentEval позволяет вам оценить эмбеддинги для предложений как признаков для следующих [задач](\data\README.md):
-| Задача     	| Тип                         	|
-|----------	|------------------------------	|
-| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection | |
-| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis  	||
-| [SST/binary](http://study.mokoron.com/) |binary sentiment analysis  	||
-|[Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads)| tags classifier ||
-|[Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads)| readability classifier ||
-|[Poems classifier]()| tag classifier||
-|[Proza classifier]()|tag classifier||
-|[Genre classification]()|tag classifier||
-| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | question-type classification ||
-| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | natural language inference ||
-| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный)| semantic textual similarity||
+
+| Задача     	| Тип                       |
+|----------	|-----------------------------|
+| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection|
+| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis|
+| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis |
+| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tags classifier |
+| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | readability classifier |
+| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | tag classifier |
+| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) |tag classifier |
+| Genre classification (kinopoisk) | tag classifier |
+| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | question-type classification |
+| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | natural language inference |
+| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный) | semantic textual similarity|
 
 Больше деталей о моделях, использованных для решения задач, вы можете найти в **\examples**, больше деталей о данных вы можете найти в **\data**
 
