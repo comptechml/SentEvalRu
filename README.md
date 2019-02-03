@@ -150,7 +150,7 @@ results = se.eval(tasks)
 ```
 Текущий список доступных задач:
 ```python
-['MRPC', 'SST2', 'SST3' ]
+[SST2, SST3, MRPC, ReadabilityCl, TagCl, PoemsCl, TREC, STS, SICK ]
 ```
 5) Запускайте!
 ---
