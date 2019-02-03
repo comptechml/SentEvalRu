@@ -1,6 +1,6 @@
 # Datasets information
 
-Read this in other languages: [English](README.md), [Русский](Readme.ru.md)
+Read this in other languages: [English](README.md), [Русский](README.ru.md)
 
 SentEval_Ru allows you to evaluate your sentence embeddings as features for the following tasks:
 

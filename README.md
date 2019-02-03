@@ -1,4 +1,4 @@
-Read this in other languages: [English](README.md), [Русский](README.ru.md)
+Read this in other languages: [English](README.md), [Русский](Readme.ru.md)
 
 # What is it and why is it?
 
