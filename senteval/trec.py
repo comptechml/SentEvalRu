@@ -23,8 +23,8 @@ class TRECEval(object):
     def __init__(self, task_path, seed=1111):
         logging.info('***** Transfer task : TREC *****\n\n')
         self.seed = seed
-        self.train = self.loadFile(os.path.join(task_path, 'train_5500.label'))
-        self.test = self.loadFile(os.path.join(task_path, 'TREC_10.label'))
+        self.train = self.loadFile(os.path.join(task_path, 'train5500_ru.txt'))
+        self.test = self.loadFile(os.path.join(task_path, 'TREC_ru.txt'))
 
     def do_prepare(self, params, prepare):
         samples = self.train['X'] + self.test['X']

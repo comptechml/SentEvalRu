@@ -20,18 +20,16 @@ from senteval.tools.validation import SplitClassifier
 
 
 class SSTEval(object):
-    def __init__(self, task_path, nclasses=2, seed=1111):
+    def __init__(self, task_path, task_name, nclasses=2, seed=1111):
         self.seed = seed
 
-        # binary or fine-grained
-        assert nclasses in [2, 5]
         self.nclasses = nclasses
-        self.task_name = 'Binary' if self.nclasses == 2 else 'Fine-Grained'
-        logging.debug('***** Transfer task : SST %s classification *****\n\n', self.task_name)
+        self.task_name = task_name
+        logging.debug('***** Transfer task :%s *****\n\n', self.task_name)
 
-        train = self.loadFile(os.path.join(task_path, 'sentiment-train.csv'))
-        dev = self.loadFile(os.path.join(task_path, 'sentiment-dev.csv'))
-        test = self.loadFile(os.path.join(task_path, 'sentiment-test.csv'))
+        train = self.loadFile(os.path.join(task_path, 'train.csv'))
+        dev = self.loadFile(os.path.join(task_path, 'dev.csv'))
+        test = self.loadFile(os.path.join(task_path, 'test.csv'))
         self.sst_data = {'train': train, 'dev': dev, 'test': test}
 
     def do_prepare(self, params, prepare):
@@ -43,14 +41,11 @@ class SSTEval(object):
         sst_data = {'X': [], 'y': []}
         with io.open(fpath, 'r', encoding='utf-8') as f:
             for line in f:
-                if self.nclasses == 2:
-                    sample = line.strip().split('\t')
-                    sst_data['y'].append(int(sample[1]))
-                    sst_data['X'].append(sample[0].split())
-                elif self.nclasses == 5:
-                    sample = line.strip().split(' ', 1)
-                    sst_data['y'].append(int(sample[0]))
-                    sst_data['X'].append(sample[1].split())
+                sample = line.strip().split('\t')
+                if len(sample) != 2:
+                    continue
+                sst_data['y'].append(int(sample[1]))
+                sst_data['X'].append(sample[0].split())
         assert max(sst_data['y']) == self.nclasses - 1
         return sst_data
 
@@ -88,8 +83,7 @@ class SSTEval(object):
                               config=config_classifier)
 
         devacc, testacc = clf.run()
-        logging.debug('\nDev acc : {0} Test acc : {1} for \
-            SST {2} classification\n'.format(devacc, testacc, self.task_name))
+        logging.debug('\nDev acc : {0} Test acc : {1} for {2} \n'.format(devacc, testacc, self.task_name))
 
         return {'devacc': devacc, 'acc': testacc,
                 'ndev': len(sst_embed['dev']['X']),
