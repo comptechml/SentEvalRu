@@ -45,16 +45,19 @@ The system participating in this task should compute text reading difficulty in 
 
 #### Proza classifier
 Tab separated input files with `sentences | label` structure.
+
 The system participating in this task should classify proza's genre.
 See possible variations of `labels` at *labels.csv*.
 
 #### Poems classifier
 Tab separated input files with `sentences | label` structure.
+
 The system participating in this task should classify poem's genre.
 See possible variations of `labels` at *labels.csv*.
 
 #### Genre classification
 Tab separated input files with `sentences | label` structure.
+
 The system participating in this task should classify movie's genre.
 See possible variations of `labels` at *genre_numeration.csv*.
 
