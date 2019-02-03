@@ -1,113 +1,171 @@
-Read this in other languages: [English](README.md), [Русский](README.ru.md)
 
-# What is it and why is it?
+# SentEvalRu
 
-SentEvalRu is a library for evaluating the quality of sentence embeddings for russian texts. We assess their generalization power by using them as features on a broad and diverse set of *tasks*.
+В рамках данного проекта была разработана библиотека для оценки качества [эмбеддингов предложений](https://en.wikipedia.org/wiki/Sentence_embedding) русских текстов. С её помощью мы можем оценить обобщающую способность эмбеддингов, используя их как признаки (features) для решения разнообразных *задач компьютерной лингвистики*.
 
-Our goal is to evaluate the algorithms, intended mostly for the English language, to Russian — prepare datasets and training models. As part of the project, we were limited in time, so it was decided to use the library [SentEval](https://arxiv.org/abs/1803.05449) as a benchmark.
+**Наша цель** — оценить алгоритмы векторизации текстов, предназначенные в основном для английского языка, на подготовленных русскоязычных наборах данных. Мы не нашли готового решения для русского языка, и решили написать своё.
 
-## Development 
-
-This project was made during the [ComptechNsk'19](http://comptech.nsk.su/) winter school. The customer was the [MIPT](https://mipt.ru/english/) laboratory [iPavlov](https://ipavlov.ai/) on behalf of Ivan Bondarenko.
+Так как мы были ограничены по времени, было принято решение использовать библиотеку [SentEval](https://arxiv.org/abs/1803.05449) [1] как эталон.
 
 
-## Tasks (data and models)
-SentEval allows you to evaluate sentence embeddings as features for the following [tasks](\data\README.md)
+Этот проек был разработан в рамках зимней школы [ComptechNsk'19](http://comptech.nsk.su/). 
+Заказчиком была лаборатория нейронных систем и глубокого обучения [МФТИ](https://mipt.ru/english/), реализующая проект по созданию разговорного искусственного интеллекта  [iPavlov](https://ipavlov.ai/).
 
-More details on the tasks see **\examples**, more details about task data see **\data**
 
-## System Requirements
-**ATTENTION!** We advise you have more that 4GB RAM for training.
+Список участников:
+- Мосолова Анна (руководитель группы)
+- Обухова Алиса (технический писатель)
+- Паульс Алексей (инженер)
+- Строганов Михаил (инженер)
+- Тимасова Екатерина (исследователь)
+- Шугалевская Наталья (исследователь)
 
-## Installation
+### Какие задачи поможет решать
+*Эмбеддинги предложений* используются везде, где решаются или используются задачи компьютерной лингвистики, например:
+- классификация намерений пользователей в чат-ботах (intent classifier);
+- использование в вопросно-ответных системах для поиска ответа на вопрос пользователя наиболее близкий по смыслу;
+- встраивание в парсеры веб-контента для анализа тональности текста (sentiment analyses);
+- задачи машинного перевода;
+- задачи [кластеризации документов](https://ru.wikipedia.org/wiki/Кластеризация_документов).
 
-Clone this repo and add your dataset to *data* folder, add your processing code to  *examples* folder.
+Наш инструмент помогает оценивать эмбеддинги предложений, что может быть полезным для каждого, кто решает одну из вышеперечисленных задач или исследует качество эмбеддингов для русского языка с научной точки зрения.
 
-## Usage examples
+### Проверяемые модели векторизации текстов
 
-More information about implemented tasks for russian language see at **\examples**
+Мы включили примеры использования следующих моделей для русского языка:
+- [Bert](https://arxiv.org/pdf/1810.04805.pdf) [2]
+- [USE (Universal Sentence Encoder)](https://arxiv.org/pdf/1803.11175.pdf) [3]
+- [FastText](https://fasttext.cc/) [4]
+- FastText+IDF [4] [5]
+- [Skip-Thought](https://arxiv.org/abs/1506.06726) [6]
 
-## Usage
+Больше информации находится в папке **/examples**.
 
-To evaluate your sentence embeddings by adding your data and a vectorization algorithm, SentEval requires that you implement two functions — *prepare* and *batcher*. After implementation you should set SentEval parameters. Then SentEval takes care of the evaluation on the transfer tasks using the embeddings as features.
+## Оценка качества и Задачи 
+Определить качество эмбеддинга можно лишь косвенно, оценивая, насколько эффективно решается ряд задач компьютерной лингвистики с использованием этой модели эмбеддингов. 
+
+Например, в следующих задачах:
+- анализ тональности текста;
+- распознавание именованных сущностей;
+- тематическое моделирование и т.д.
+
+SentEvalRu позволяет вам оценить эмбеддинги предложений для следующих [задач](\data\README.md):
+
+| Задача     	| Тип                       |
+|----------	|-----------------------------|
+| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection|
+| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis|
+| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis |
+| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tags classifier |
+| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | readability classifier |
+| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | tag classifier |
+| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) |tag classifier |
+| Genre classification (kinopoisk) | tag classifier |
+| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | question-type classification |
+| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | natural language inference |
+| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный) | semantic textual similarity|
+
+Больше деталей о моделях, использованных для решения задач, вы можете найти в **\examples**, больше деталей о данных вы можете найти в **\data**
+
+---
+## Системные требования
+
+**Внимание!** Мы советуем вам иметь больше 4 ГБ оперативной памяти для тренировки модели skip_thought.
+
+## Подготовка к установке
+
+Перед началом использования установите следующие системы и компоненты:
+
+* Python 3 with [NumPy](http://www.numpy.org/)/[SciPy](http://www.scipy.org/)
+* [Pytorch](http://pytorch.org/)>=0.4
+* [scikit-learn](http://scikit-learn.org/stable/index.html)>=0.18.0
+* [TensorFlow](https://www.tensorflow.org/) >=1.12.0
+* [Keras](https://keras.io/) >=2.2.4
+
+Вы можете скачать [Anaconda](https://www.anaconda.com/distribution/),которая включает все эти зависимости. 
+
+## Установка
+
+Склонируйте этот репозиторий и добавьте ваши данные в папку *data*, добавьте ваш код в папку  *examples*.
+
+## Примеры использования
+
+Больше информации о реализованых задачах для русского языка смотрите в */examples*
+
+## Использование
+
+Чтобы оценить ваши эмбеддинги предложений, добавляя ваши данные и алгоритм векторизации, SentEvalRu требует, чтобы вы реализовали две функции: *prepare* and *batcher*. После реализации вы должны задать параметры SentEvalRu. Далее SentEvalRu позаботится об оценке задач, переданных на обучение, используя эмбеддинги как признаки.
 
 ### 1) prepare(params, samples) (optional)
 
-**Prepare** sees the whole dataset of each task and can thus construct the word vocabulary, the dictionary of word vectors etc., depending on a task.
+**Prepare** просматривает весь датасет для каждой из задач и составляет словарь слов или векторов слов, в зависимости от ваших задач.
 
  ```python
  prepare(params, samples) 
  ```
- - *params*: SentEval parameters;
- - *samples*: list of all sentences from the task;
- - no *output*. Arguments stored in *params* can futher be used by **batcher**.
+ - *params*: параметры SentEvalRu;
+ - *samples*: список всех предложений задачи;
+ - нет *output*. Аргументы, собранные в *params* могут быть использованы в **batcher**.
 
-*Example*: in bow.py, *prepare* is is used to build the vocabulary of words and construct the "params.word_vect* dictionary of word vectors.
+*Example*: в bow.py, *prepare* используется для создания словаря слов и конструирования "params.word_vect* словаря векторов слов.
 
 ### 2) batcher(params, batch)
 
-**Batcher** transforms a batch of text sentences into sentence embeddings. **Batcher** only sees one batch of sentences at a time.
+**Batcher** преобразует  партию (batch) текстовых предложений в  эмбеддинги слов. **Batcher** просматривает только одну партию за раз.
  ```python
  batcher(params, batch)
  ```
-- *params*: SentEval parameters;
-- *batch*: numpy array of text sentences (of size params.batch_size)
-- *output*: numpy array of sentence embeddings (of size params.batch_size)
+- *params*: параметры SentEvalRu;
+- *batch*: numpy массив текстовых предложений (размера params.batch_size)
+- *output*: numpy массив эмбеддингов предложений (размера params.batch_size)
 
-*Example*: in bow.py, batcher is used to compute the mean of the word vectors for each sentence in the batch using params.word_vec. Use your own encoder in that function to encode sentences.
+*Пример*: в bow.py, batcher используется для вычисления усреднения векторов для слов в каждом батче, используя params.word_vec. 
 
-### 3) Evaluation on transfer tasks
+### 3) Оценка задач
 
-After having implemented the batch and prepare function for your own sentence encoder,
+После реализации функций batch и prepare для вашего кодировщика предложений, выполните следующие шаги:
 
-1) to perform the actual evaluation, first import senteval and set its parameters:
+1) Чтобы выполнить фактическую оценку, сначала импортируйте SentEvalRu и задайте его параметры:
 ```python
-import senteval
+import SentEvalRu
 params = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10}
 ```
 
-2) (optional) set the parameters of the classifier (when applicable):
+2) (опционально) задайте параметры классификатора:
 ```python
 params['classifier'] = {'nhid': 0, 'optim': 'adam', 'batch_size': 64,
                                  'tenacity': 5, 'epoch_size': 4}
 ```
-You can choose **nhid=0** (Logistic Regression) or **nhid>0** (MLP) and define the parameters for training.
+Вы можете выбрать **nhid=0** (Логистическая регрессия) или **nhid>0** (MLP) и определить параметры для тренировки (training).
 
-3) Create an instance of the class SE:
+3) Создайте экземпляр класса SE:
 ```python
-se = senteval.engine.SE(params, batcher, prepare)
+se = SentEvalRu.engine.SE(params, batcher, prepare)
 ```
 
-4) define the set of transfer tasks and run the evaluation:
+4) Определите набор Задач:
 ```python
 tasks = ['MRPC', 'SST2']
 results = se.eval(tasks)
 ```
-The current list of available tasks is:
+Текущий список доступных задач:
 ```python
 ['MRPC', 'SST2', 'SST3' ]
 ```
-
-5) RUN! 
+5) Запускайте!
 ---
-To get a proxy of the results while reducing computation time, we suggest the **prototyping config**, which will results in a 5 times speedup for classification tasks:
-```python
-params = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 5}
-params['classifier'] = {'nhid': 0, 'optim': 'rmsprop', 'batch_size': 128,
-                                 'tenacity': 3, 'epoch_size': 2}
-```
 
-## SentEval parameters
-Global parameters of SentEval:
+## SentEvalRu параметры
+Глобальные параметры SentEvalRu:
 ```bash
-# senteval parameters
-task_path                   # path to SentEval datasets (required)
+# SentEvalRu parameters
+task_path                   # path to SentEvalRu datasets (required)
 seed                        # seed
 usepytorch                  # use cuda-pytorch (else scikit-learn) where possible
 kfold                       # k-fold validation for MR/CR/SUB/MPQA.
 ```
 
-Parameters of the classifier:
+Параметры классификатора:
 ```bash
 nhid:                       # number of hidden units (0: Logistic Regression, >0: MLP); Default nonlinearity: Tanh
 optim:                      # optimizer ("sgd,lr=0.1", "adam", "rmsprop" ..)
@@ -117,28 +175,17 @@ max_epoch:                  # max number of epoches
 dropout:                    # dropout for MLP
 ```
 
-## Dependencies
-
-This code is written in python. The dependencies are:
-
-* Python 3 with [NumPy](http://www.numpy.org/)/[SciPy](http://www.scipy.org/)
-* [Pytorch](http://pytorch.org/)>=0.4
-* [scikit-learn](http://scikit-learn.org/stable/index.html)>=0.18.0
-* [TensorFlow](https://www.tensorflow.org/) >=1.12.0
-* [Keras](https://keras.io/) >=2.2.4
-
-You can download [Anaconda](https://www.anaconda.com/distribution/) that includes all necessary libraries. 
-## References
-
-### SentEval: An Evaluation Toolkit for Universal Sentence Representations
+## Ссылки на научные публикации
 
 [1] A. Conneau, D. Kiela, [*SentEval: An Evaluation Toolkit for Universal Sentence Representations*](https://arxiv.org/abs/1803.05449)
 
-```
-@article{conneau2018senteval,
-  title={SentEval: An Evaluation Toolkit for Universal Sentence Representations},
-  author={Conneau, Alexis and Kiela, Douwe},
-  journal={arXiv preprint arXiv:1803.05449},
-  year={2018}
-}
-```
+[2] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova, [*BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*
+](https://arxiv.org/abs/1810.04805)
+
+[3] Daniel Cer, Yinfei Yang, Sheng-yi Kong, ... [*Universal Sentence Encoder*](https://arxiv.org/abs/1803.11175)
+
+[4] A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, [*Bag of Tricks for Efficient Text Classification*](https://arxiv.org/abs/1607.01759)
+
+[5] Martin Klein, Michael L. Nelson, [*Approximating Document Frequency with Term Count Values*](https://arxiv.org/abs/0807.3755)
+
+[6] Ryan Kiros, Yukun Zhu, Ruslan Salakhutdinov, Richard S. Zemel, Antonio Torralba, Raquel Urtasun, and Sanja Fidler, [*Skip-Thought Vectors*]((https://arxiv.org/abs/1506.06726))
