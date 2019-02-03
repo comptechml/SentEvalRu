@@ -61,6 +61,18 @@ SentEval позволяет вам оценить эмбеддинги для п
 Больше деталей о моделях, использованных для решения задач, вы можете найти в **\examples**, больше деталей о данных вы можете найти в **\data**
 
 ---
+## Dependencies
+
+This code is written in python. The dependencies are:
+
+* Python 3 with [NumPy](http://www.numpy.org/)/[SciPy](http://www.scipy.org/)
+* [Pytorch](http://pytorch.org/)>=0.4
+* [scikit-learn](http://scikit-learn.org/stable/index.html)>=0.18.0
+* [TensorFlow](https://www.tensorflow.org/) >=1.12.0
+* [Keras](https://keras.io/) >=2.2.4
+
+You can download [Anaconda](https://www.anaconda.com/distribution/) that includes all necessary libraries. 
+
 ## Системные требования
 **Внимание!** Мы советуем вам иметь больше 4 ГБ оперативной памяти для тренировки модели skip_thought.
 
@@ -162,17 +174,6 @@ max_epoch:                  # max number of epoches
 dropout:                    # dropout for MLP
 ```
 
-## Dependencies
-
-This code is written in python. The dependencies are:
-
-* Python 3 with [NumPy](http://www.numpy.org/)/[SciPy](http://www.scipy.org/)
-* [Pytorch](http://pytorch.org/)>=0.4
-* [scikit-learn](http://scikit-learn.org/stable/index.html)>=0.18.0
-* [TensorFlow](https://www.tensorflow.org/) >=1.12.0
-* [Keras](https://keras.io/) >=2.2.4
-
-You can download [Anaconda](https://www.anaconda.com/distribution/) that includes all necessary libraries. 
 ## References
 
 ### SentEval: An Evaluation Toolkit for Universal Sentence Representations
