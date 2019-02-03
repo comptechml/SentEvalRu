@@ -61,7 +61,7 @@ SentEval позволяет вам оценить эмбеддинги для п
 Больше деталей о моделях, использованных для решения задач, вы можете найти в **\examples**, больше деталей о данных вы можете найти в **\data**
 
 ---
-## Dependencies
+## Зависимости
 
 This code is written in python. The dependencies are:
 
@@ -103,7 +103,7 @@ You can download [Anaconda](https://www.anaconda.com/distribution/) that include
 
 ### 2) batcher(params, batch)
 
-**Batcher** преобразует  партию(batch) текстовых предложений в  эмбеддинги слов. **Batcher** просматривает только одны партию за раз.
+**Batcher** преобразует  партию (batch) текстовых предложений в  эмбеддинги слов. **Batcher** просматривает только одны партию за раз.
  ```python
  batcher(params, batch)
  ```
@@ -111,51 +111,44 @@ You can download [Anaconda](https://www.anaconda.com/distribution/) that include
 - *batch*: numpy массив текстовых предложений (размера params.batch_size)
 - *output*: numpy массив эмбеддингов предложений (размера params.batch_size)
 
-*Example*: в bow.py, batcher используется для вычисления усреднения векторов для словдля каждого предложения в партии используя params.word_vec. Используя свой собственный кодировщик для кодировки предложений.
+*Пример*: в bow.py, batcher используется для вычисления усреднения векторов для словдля каждого предложения в партии используя params.word_vec. Используя свой собственный кодировщик для кодировки предложений.
 
 ### 3) Оценка на transfer tasks
 
-После реализации the batch and prepare function for your own sentence encoder,
+После реализации функций batch и prepare для вашего кодировщика предложений,
 
-1) to perform the actual evaluation, first import senteval and set its parameters:
+1) Чтобы выполнить фактическую оценку, сначала импортируйте senteval и задайте его параметры:
 ```python
 import senteval
 params = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10}
 ```
 
-2) (optional) set the parameters of the classifier (when applicable):
+2) (опционально) задайте параметры классификатора:
 ```python
 params['classifier'] = {'nhid': 0, 'optim': 'adam', 'batch_size': 64,
                                  'tenacity': 5, 'epoch_size': 4}
 ```
-You can choose **nhid=0** (Logistic Regression) or **nhid>0** (MLP) and define the parameters for training.
+Вы можете выбрать **nhid=0** (Логистическая регрессия) или **nhid>0** (MLP) и определить параметры для тренировки (training).
 
-3) Create an instance of the class SE:
+3) Создайте экземпляр класса SE:
 ```python
 se = senteval.engine.SE(params, batcher, prepare)
 ```
 
-4) define the set of transfer tasks and run the evaluation:
+1) Определите набор Задач:
 ```python
 tasks = ['MRPC', 'SST2']
 results = se.eval(tasks)
 ```
-The current list of available tasks is:
+Текущий список доступных задач:
 ```python
 ['MRPC', 'SST2', 'SST3' ]
 ```
-
-5) RUN! 
+5) Запускайте!
 ---
-To get a proxy of the results while reducing computation time, we suggest the **prototyping config**, which will results in a 5 times speedup for classification tasks:
-```python
-params = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 5}
-params['classifier'] = {'nhid': 0, 'optim': 'rmsprop', 'batch_size': 128,
-                                 'tenacity': 3, 'epoch_size': 2}
-```
 
-## SentEval parameters
-Global parameters of SentEval:
+## SentEval параметры
+Глобальные параметры SentEval:
 ```bash
 # senteval parameters
 task_path                   # path to SentEval datasets (required)
@@ -164,7 +157,7 @@ usepytorch                  # use cuda-pytorch (else scikit-learn) where possibl
 kfold                       # k-fold validation for MR/CR/SUB/MPQA.
 ```
 
-Parameters of the classifier:
+Параметры глассификатора:
 ```bash
 nhid:                       # number of hidden units (0: Logistic Regression, >0: MLP); Default nonlinearity: Tanh
 optim:                      # optimizer ("sgd,lr=0.1", "adam", "rmsprop" ..)
@@ -174,7 +167,7 @@ max_epoch:                  # max number of epoches
 dropout:                    # dropout for MLP
 ```
 
-## References
+## Ссылки
 
 ### SentEval: An Evaluation Toolkit for Universal Sentence Representations
 
