@@ -9,7 +9,7 @@ import skip_thought.tools as tools
 
 # Set PATHs
 PATH_TO_SENTEVAL = '../'
-PATH_TO_DATA = '../data/senteval_data/'
+PATH_TO_DATA = '../data/'
 PATH_TO_SKIPTHOUGHT = 'skip-thoughts-files'
 
 
@@ -24,7 +24,7 @@ def prepare(params, samples):
 def batcher(params, batch):
     if any(isinstance(lst, list) for lst in batch):
         batch = [str(" ".join(sent)) for sent in batch]
-    embeddings = model.encode(params['encoder'], batch,
+    embeddings = tools.encode(model, batch,
                                      verbose=False, use_eos=True)
     return embeddings
 
@@ -47,7 +47,7 @@ def check():
 
 if __name__ == "__main__":
     model = tools.load_model('skip-thoughts-files/wiki_model.dat.npz', 'skip-thoughts-files/wiki_dict.dat', 'skip-thoughts-files/all.norm-sz100-w10-cb0-it1-min100.w2v')
-    params_senteval['encoder'] = model
+    #params_senteval['encoder'] = model
     se = senteval.engine.SE(params_senteval, batcher, prepare)
     # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
     transfer_tasks = 'SST2'

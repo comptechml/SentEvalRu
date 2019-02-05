@@ -42,7 +42,11 @@ def batcher(params, batch):
 
     l=len(batch)
     for i in range(l):
-        tr.set_text(batch[i])
+        if isinstance(batch[i], list):
+            sentence = " ".join(str(x) for x in batch[i])
+        else:
+            sentence = batch[i]
+        tr.set_text(sentence)
         sentence=tr.translate()
         batch[i]=sentence
 

@@ -2,6 +2,7 @@ from __future__ import absolute_import, division, unicode_literals
 
 import sys
 import io
+import os
 import numpy as np
 import logging
 import json
@@ -28,13 +29,13 @@ def batcher(params, batch):
    
     file = open("file_in.txt", "w", encoding="utf-8")
     for sent in batch:
-        file.write(sent+'\n')
+        file.write(str(sent)+'\n')
     file.close() 
     
-    f=open("File_out.jsonl")
+    f=open("File_out.jsonl", 'w')
     f.close()
     
-    %run extract_features.py --input_file=file_in.txt --output_file=File_out.jsonl --vocab_file=vocab.txt --bert_config_file=tmp/multi/bert_config.json --init_checkpoint=tmp/multi/bert_model.ckpt --layers=-1 --max_seq_length=128 --batch_size=8
+    os.system('extract_features.py --input_file=file_in.txt --output_file=File_out.jsonl --vocab_file=../multi/vocab.txt --bert_config_file=../multi/bert_config.json --init_checkpoint=../multi/bert_model.ckpt --layers=-1 --max_seq_length=128 --batch_size=8')
     
     data = []
     f=open("File_out.jsonl")
