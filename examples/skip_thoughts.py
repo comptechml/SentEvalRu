@@ -39,32 +39,35 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
 
 def check():
-    if os.path.isdir(os.path.join('skip_thougth', 'skip-thoughts-files')):
+    if os.path.isdir(os.path.join('skip_thought', 'skip-thoughts-files')):
         do_download = \
-            (not os.path.isfile(os.path.join('skip_thougth', 'skip-thoughts-files', 'wiki_model.dat.npz'))) or \
-            (not os.path.isfile(os.path.join('skip_thougth', 'skip-thoughts-files', 'wiki_dict.dat'))) or \
-            (not os.path.isfile(os.path.join('skip_thougth', 'skip-thoughts-files',
+            (not os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz'))) or \
+            (not os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz.pkl'))) or \
+            (not os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_dict.dat'))) or \
+            (not os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files',
                                              'all.norm-sz100-w10-cb0-it1-min100.w2v')))
     else:
         do_download = True
     if do_download:
-        if os.path.isfile(os.path.join('skip_thougth', 'skip-thoughts-files', 'wiki_model.dat.npz')):
-            os.remove(os.path.join('skip_thougth', 'skip-thoughts-files', 'wiki_model.dat.npz'))
-        if os.path.isfile(os.path.join('skip_thougth', 'skip-thoughts-files', 'wiki_dict.dat')):
-            os.remove(os.path.join('skip_thougth', 'skip-thoughts-files', 'wiki_dict.dat'))
-        if os.path.isfile(os.path.join('skip_thougth', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v')):
-            os.remove(os.path.join('skip_thougth', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v'))
-        if os.path.isdir(os.path.join('skip_thougth', 'skip-thoughts-files')):
-            os.removedirs(os.path.join('skip_thougth', 'skip-thoughts-files'))
-        download_file_from_google_drive('1JtPPT4aW0mp8kG_jG5RncCNsU_501wqD',
-                                        os.path.join('skip_thougth', 'skip-thoughts-files.zip'))
-        with zipfile.ZipFile(os.path.join('skip_thougth', 'skip-thoughts-files.zip')) as skipthoughts_zip:
-            skipthoughts_zip.extractall('skip_thougth')
-        os.remove(os.path.join('skip_thougth', 'skip-thoughts-files.zip'))
+        if os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz')):
+            os.remove(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz'))
+        if os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz.pkl')):
+            os.remove(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz.pkl'))
+        if os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_dict.dat')):
+            os.remove(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_dict.dat'))
+        if os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v')):
+            os.remove(os.path.join('skip_thought', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v'))
+        if os.path.isdir(os.path.join('skip_thought', 'skip-thoughts-files')):
+            os.removedirs(os.path.join('skip_thought', 'skip-thoughts-files'))
+        download_file_from_google_drive('1pIW0bwoo2gmTyFKnqLYxeXYF6w3ubg6S',
+                                        os.path.join('skip_thought', 'skip-thoughts-files.zip'))
+        with zipfile.ZipFile(os.path.join('skip_thought', 'skip-thoughts-files.zip')) as skipthoughts_zip:
+            skipthoughts_zip.extractall('skip_thought')
+        os.remove(os.path.join('skip_thought', 'skip-thoughts-files.zip'))
     params_senteval['encoder'] = tools.load_model(
-        os.path.join('skip_thougth', 'skip-thoughts-files', 'wiki_model.dat.npz'),
-        os.path.join('skip_thougth', 'skip-thoughts-files', 'wiki_dict.dat'),
-        os.path.join('skip_thougth', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v')
+        os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz'),
+        os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_dict.dat'),
+        os.path.join('skip_thought', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v')
     )
     se = senteval.engine.SE(params_senteval, batcher, prepare)
     transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
