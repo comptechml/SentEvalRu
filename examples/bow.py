@@ -9,8 +9,11 @@ from __future__ import absolute_import, division, unicode_literals
 
 import sys
 import io
+import os
 import numpy as np
 import logging
+
+from load_file_from_www import download_file_from_www
 
 
 # Set PATHs
@@ -103,6 +106,18 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
 
 def check():
+    if not os.path.isfile(os.path.join('fasttext', 'ft_native_300_ru_wiki_lenta_nltk_word_tokenize.vec')):
+        download_file_from_www(
+            'http://files.deeppavlov.ai/embeddings/ft_native_300_ru_wiki_lenta_nltk_word_tokenize/'
+            'ft_native_300_ru_wiki_lenta_nltk_word_tokenize.vec',
+            os.path.join('fasttext', 'ft_native_300_ru_wiki_lenta_nltk_word_tokenize.vec')
+        )
+    if not os.path.isfile(os.path.join('fasttext', 'ft_native_300_ru_wiki_lenta_nltk_word_tokenize.bin')):
+        download_file_from_www(
+            'http://files.deeppavlov.ai/embeddings/ft_native_300_ru_wiki_lenta_nltk_word_tokenize/'
+            'ft_native_300_ru_wiki_lenta_nltk_word_tokenize.bin',
+            os.path.join('fasttext', 'ft_native_300_ru_wiki_lenta_nltk_word_tokenize.bin')
+        )
     se = senteval.engine.SE(params_senteval, batcher, prepare)
     transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
     # transfer_tasks = 'SST2'
