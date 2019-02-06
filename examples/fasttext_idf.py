@@ -104,14 +104,9 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 def check():
     se = senteval.engine.SE(params_senteval, batcher, prepare)
     transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
-    # transfer_tasks = 'SST2'
-    results =  se.eval(transfer_tasks)
+    results = se.eval(transfer_tasks)
     return results
 
 
 if __name__ == "__main__":
-    se = senteval.engine.SE(params_senteval, batcher, prepare)
-    # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
-    transfer_tasks = 'SST2'
-    # transfer_tasks = 'MRPC'
-    results = se.eval(transfer_tasks)
+    check()

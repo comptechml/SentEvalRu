@@ -1,7 +1,5 @@
 from __future__ import absolute_import, division, unicode_literals
 
-import io
-import numpy as np
 import logging
 import sys
 import skip_thought.tools as tools
@@ -24,8 +22,7 @@ def prepare(params, samples):
 def batcher(params, batch):
     if any(isinstance(lst, list) for lst in batch):
         batch = [str(" ".join(sent)) for sent in batch]
-    embeddings = tools.encode(model, batch,
-                                     verbose=False, use_eos=True)
+    embeddings = tools.encode(params['encoder'], batch, verbose=False, use_eos=True)
     return embeddings
 
 
@@ -38,17 +35,14 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
 
 def check():
+    params_senteval['encoder'] = tools.load_model('skip-thoughts-files/wiki_model.dat.npz',
+                                                  'skip-thoughts-files/wiki_dict.dat',
+                                                  'skip-thoughts-files/all.norm-sz100-w10-cb0-it1-min100.w2v')
     se = senteval.engine.SE(params_senteval, batcher, prepare)
-    # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
-    transfer_tasks = 'SST2'
-    results =  se.eval(transfer_tasks)
+    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
+    results = se.eval(transfer_tasks)
     return results
 
 
 if __name__ == "__main__":
-    model = tools.load_model('skip-thoughts-files/wiki_model.dat.npz', 'skip-thoughts-files/wiki_dict.dat', 'skip-thoughts-files/all.norm-sz100-w10-cb0-it1-min100.w2v')
-    #params_senteval['encoder'] = model
-    se = senteval.engine.SE(params_senteval, batcher, prepare)
-    # transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
-    transfer_tasks = 'SST2'
-    results = se.eval(transfer_tasks)
+    check()
