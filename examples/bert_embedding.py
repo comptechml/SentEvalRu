@@ -4,11 +4,15 @@ import sys
 import os
 import logging
 import json
+import zipfile
+
+from load_file_from_www import download_file_from_www
 
 
 # Set PATHs
-PATH_TO_SENTEVAL = '../'
-PATH_TO_DATA = '../data'
+PATH_TO_SENTEVAL = os.path.join(os.path.dirname(__file__), '..')
+PATH_TO_DATA = os.path.join(os.path.dirname(__file__), '..', 'data')
+PATH_TO_BERT = os.path.join(os.path.dirname(__file__), 'bert_emb', 'data', 'multi_cased_L-12_H-768_A-12')
 
 # import SentEval
 sys.path.insert(0, PATH_TO_SENTEVAL)
@@ -37,9 +41,14 @@ def batcher(params, batch):
         f.close()
 
         os.system(
-            './bert_emb/extract_features.py --input_file={0} --output_file={1} --vocab_file={2}/vocab.txt '
-            '--bert_config_file={2}/bert_config.json --init_checkpoint={2}/bert_model.ckpt --layers=-1 '
-            '--max_seq_length=128 --batch_size=8'.format(input_file_name, output_file_name, params['bert_dir'])
+            './bert_emb/extract_features.py --input_file={0} --output_file={1} --vocab_file={2} '
+            '--bert_config_file={3} --init_checkpoint={4} --layers=-1 --max_seq_length=128 --batch_size={5}'.format(
+                input_file_name, output_file_name,
+                os.path.join(PATH_TO_BERT, 'vocab.txt'),
+                os.path.join(PATH_TO_BERT, 'bert_config.json'),
+                os.path.join(PATH_TO_BERT, 'bert_model.ckpt'),
+                params['batch_size']
+            )
         )
 
         data = []
@@ -63,17 +72,39 @@ def batcher(params, batch):
     
     return embeddings
 
-# Set params for SentEval
-params_senteval = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 5}
-params_senteval['classifier'] = {'nhid': 0, 'optim': 'rmsprop', 'batch_size': 128,
-                                 'tenacity': 3, 'epoch_size': 2}
 
 # Set up logger
 logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
 
 def check():
-    params_senteval['bert_dir'] = os.path.join('bert_emb', 'data', 'multi_cased_L-12_H-768_A-12')
+    # Set params for SentEval
+    params_senteval = {
+        'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10, 'batch_size': 16,
+        'classifier': {'nhid': 0, 'optim': 'rmsprop', 'batch_size': 128, 'tenacity': 3, 'epoch_size': 2},
+    }
+    if os.path.isdir(PATH_TO_BERT):
+        do_download = (not os.path.isfile(os.path.join(PATH_TO_BERT, 'vocab.txt'))) or \
+                      (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_config.json'))) or \
+                      (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt')))
+    else:
+        do_download = True
+    if do_download:
+        if os.path.isfile(os.path.join(PATH_TO_BERT, 'vocab.txt')):
+            os.remove(os.path.join(PATH_TO_BERT, 'vocab.txt'))
+        if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_config.json')):
+            os.remove(os.path.join(PATH_TO_BERT, 'bert_config.json'))
+        if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt')):
+            os.remove(os.path.join(PATH_TO_BERT, 'bert_model.ckpt'))
+        if os.path.isdir(PATH_TO_BERT):
+            os.removedirs(PATH_TO_BERT)
+        download_file_from_www(
+            'https://storage.googleapis.com/bert_models/2018_11_23/multi_cased_L-12_H-768_A-12.zip',
+            PATH_TO_BERT + '.zip'
+        )
+        with zipfile.ZipFile(PATH_TO_BERT + '.zip') as skipthoughts_zip:
+            skipthoughts_zip.extractall(os.path.join(os.path.dirname(__file__), 'bert_emb', 'data'))
+        os.remove(PATH_TO_BERT + '.zip')
     se = senteval.engine.SE(params_senteval, batcher, prepare)
     transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
     results = se.eval(transfer_tasks)
@@ -81,6 +112,4 @@ def check():
 
 
 if __name__ == "__main__":
-    se = senteval.engine.SE(params_senteval, batcher, prepare)
-    transfer_tasks = 'SST2'
-    results = se.eval(transfer_tasks)
+    check()

@@ -10,9 +10,9 @@ from load_file_from_googledrive import download_file_from_google_drive
 
 
 # Set PATHs
-PATH_TO_SENTEVAL = '../'
-PATH_TO_DATA = '../data/'
-PATH_TO_SKIPTHOUGHT = 'skip-thoughts-files'
+PATH_TO_SENTEVAL = os.path.join(os.path.dirname(__file__), '..')
+PATH_TO_DATA = os.path.join(os.path.dirname(__file__), '..', 'data')
+PATH_TO_SKIPTHOUGHT = os.path.join(os.path.dirname(__file__), 'skip_thought', 'skip-thoughts-files')
 
 
 # import Senteval
@@ -30,44 +30,43 @@ def batcher(params, batch):
     return embeddings
 
 
-# Set params for SentEval
-params_senteval = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10, 'batch_size': 128}
-params_senteval['classifier'] = {'nhid': 0, 'optim': 'adam', 'batch_size': 128,
-                                 'tenacity': 5, 'epoch_size': 4}
 # Set up logger
 logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
 
 def check():
-    if os.path.isdir(os.path.join('skip_thought', 'skip-thoughts-files')):
+    # Set params for SentEval
+    params_senteval = {
+        'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10, 'batch_size': 128,
+        'classifier': {'nhid': 0, 'optim': 'adam', 'batch_size': 128, 'tenacity': 5, 'epoch_size': 4}
+    }
+    if os.path.isdir(PATH_TO_SKIPTHOUGHT):
         do_download = \
-            (not os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz'))) or \
-            (not os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz.pkl'))) or \
-            (not os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_dict.dat'))) or \
-            (not os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files',
-                                             'all.norm-sz100-w10-cb0-it1-min100.w2v')))
+            (not os.path.isfile(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_model.dat.npz'))) or \
+            (not os.path.isfile(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_model.dat.npz.pkl'))) or \
+            (not os.path.isfile(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_dict.dat'))) or \
+            (not os.path.isfile(os.path.join(PATH_TO_SKIPTHOUGHT, 'all.norm-sz100-w10-cb0-it1-min100.w2v')))
     else:
         do_download = True
     if do_download:
-        if os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz')):
-            os.remove(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz'))
-        if os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz.pkl')):
-            os.remove(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz.pkl'))
-        if os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_dict.dat')):
-            os.remove(os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_dict.dat'))
-        if os.path.isfile(os.path.join('skip_thought', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v')):
-            os.remove(os.path.join('skip_thought', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v'))
-        if os.path.isdir(os.path.join('skip_thought', 'skip-thoughts-files')):
-            os.removedirs(os.path.join('skip_thought', 'skip-thoughts-files'))
-        download_file_from_google_drive('1pIW0bwoo2gmTyFKnqLYxeXYF6w3ubg6S',
-                                        os.path.join('skip_thought', 'skip-thoughts-files.zip'))
-        with zipfile.ZipFile(os.path.join('skip_thought', 'skip-thoughts-files.zip')) as skipthoughts_zip:
-            skipthoughts_zip.extractall('skip_thought')
-        os.remove(os.path.join('skip_thought', 'skip-thoughts-files.zip'))
+        if os.path.isfile(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_model.dat.npz')):
+            os.remove(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_model.dat.npz'))
+        if os.path.isfile(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_model.dat.npz.pkl')):
+            os.remove(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_model.dat.npz.pkl'))
+        if os.path.isfile(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_dict.dat')):
+            os.remove(os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_dict.dat'))
+        if os.path.isfile(os.path.join(PATH_TO_SKIPTHOUGHT, 'all.norm-sz100-w10-cb0-it1-min100.w2v')):
+            os.remove(os.path.join(PATH_TO_SKIPTHOUGHT, 'all.norm-sz100-w10-cb0-it1-min100.w2v'))
+        if os.path.isdir(PATH_TO_SKIPTHOUGHT):
+            os.removedirs(PATH_TO_SKIPTHOUGHT)
+        download_file_from_google_drive('1pIW0bwoo2gmTyFKnqLYxeXYF6w3ubg6S', PATH_TO_SKIPTHOUGHT + '.zip')
+        with zipfile.ZipFile(os.path.join(PATH_TO_SKIPTHOUGHT + '.zip')) as skipthoughts_zip:
+            skipthoughts_zip.extractall(os.path.join(os.path.dirname(__file__), 'skip_thought'))
+        os.remove(os.path.join(PATH_TO_SKIPTHOUGHT + '.zip'))
     params_senteval['encoder'] = tools.load_model(
-        os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_model.dat.npz'),
-        os.path.join('skip_thought', 'skip-thoughts-files', 'wiki_dict.dat'),
-        os.path.join('skip_thought', 'skip-thoughts-files', 'all.norm-sz100-w10-cb0-it1-min100.w2v')
+        os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_model.dat.npz'),
+        os.path.join(PATH_TO_SKIPTHOUGHT, 'wiki_dict.dat'),
+        os.path.join(PATH_TO_SKIPTHOUGHT, 'all.norm-sz100-w10-cb0-it1-min100.w2v')
     )
     se = senteval.engine.SE(params_senteval, batcher, prepare)
     transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
