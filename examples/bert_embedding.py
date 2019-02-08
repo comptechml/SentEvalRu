@@ -29,8 +29,8 @@ def batcher(params, batch):
     batch = [sent if sent != [] else ['.'] for sent in batch]
     embeddings = []
 
-    input_file_name = 'file_in.txt'
-    output_file_name = 'File_out.jsonl'
+    input_file_name = os.path.join(os.path.dirname(__file__), 'bert_emb', 'data', 'file_in.txt')
+    output_file_name = os.path.join(os.path.dirname(__file__), 'bert_emb', 'data', 'File_out.jsonl')
     try:
         file = open(input_file_name, "w", encoding="utf-8")
         for sent in batch:
@@ -41,7 +41,7 @@ def batcher(params, batch):
         f.close()
 
         os.system(
-            './bert_emb/extract_features.py --input_file={0} --output_file={1} --vocab_file={2} '
+            'python ./bert_emb/extract_features.py --input_file={0} --output_file={1} --vocab_file={2} '
             '--bert_config_file={3} --init_checkpoint={4} --layers=-1 --max_seq_length=128 --batch_size={5}'.format(
                 input_file_name, output_file_name,
                 os.path.join(PATH_TO_BERT, 'vocab.txt'),
@@ -62,7 +62,6 @@ def batcher(params, batch):
                 emg = k["layers"][0]
                 for i in emg["values"]:
                     vec.append(i)
-            print(vec)
             embeddings.append(vec)
     finally:
         if os.path.isfile(input_file_name):
@@ -86,7 +85,10 @@ def check():
     if os.path.isdir(PATH_TO_BERT):
         do_download = (not os.path.isfile(os.path.join(PATH_TO_BERT, 'vocab.txt'))) or \
                       (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_config.json'))) or \
-                      (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt')))
+                      (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt'))) or \
+                      (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.index'))) or \
+                      (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.meta'))) or \
+                      (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.data-00000-of-00001')))
     else:
         do_download = True
     if do_download:
@@ -96,6 +98,12 @@ def check():
             os.remove(os.path.join(PATH_TO_BERT, 'bert_config.json'))
         if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt')):
             os.remove(os.path.join(PATH_TO_BERT, 'bert_model.ckpt'))
+        if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.index')):
+            os.remove(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.index'))
+        if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.meta')):
+            os.remove(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.meta'))
+        if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.data-00000-of-00001')):
+            os.remove(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.data-00000-of-00001'))
         if os.path.isdir(PATH_TO_BERT):
             os.removedirs(PATH_TO_BERT)
         download_file_from_www(
