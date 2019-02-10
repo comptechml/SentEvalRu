@@ -38,7 +38,7 @@ def batcher(params, batch):
     unique_id = 0
     for cur_sent in batch:
         examples.append(
-            bert_emb.extract_features.InputExample(unique_id=unique_id, text_a=cur_sent, text_b=None))
+            bert_emb.extract_features.InputExample(unique_id=unique_id, text_a=' '.join(cur_sent), text_b=None))
         unique_id += 1
     features = bert_emb.extract_features.convert_examples_to_features(
         examples=examples, seq_length=params['bert']['max_seq_length'], tokenizer=params['bert']['tokenizer'])
