@@ -16,6 +16,15 @@ idna==2.8
 jmespath==0.9.3
 Keras-Applications==1.0.7
 Keras-Preprocessing==1.0.8
+Keras==2.2.4
+keras-bert==0.29.0
+keras-embed-sim==0.2.0
+keras-layer-normalization==0.9.0
+keras-multi-head==0.15.0
+keras-pos-embd==0.7.0
+keras-position-wise-feed-forward==0.3.0
+keras-self-attention==0.33.0
+keras-transformer==0.17.0
 kiwisolver==1.0.1
 Markdown==3.0.1
 matplotlib==3.0.2
@@ -27,6 +36,7 @@ protobuf==3.6.1
 pyparsing==2.3.1
 python-dateutil==2.7.5
 pytz==2018.9
+pyyaml==3.13
 requests==2.21.0
 s3transfer==0.1.13
 scikit-learn==0.20.2

@@ -1,5 +1,7 @@
 from __future__ import absolute_import, division, unicode_literals
 
+import codecs
+import json
 import sys
 import os
 import logging
@@ -8,16 +10,15 @@ import zipfile
 import numpy as np
 import tensorflow as tf
 
+from keras_bert import load_trained_model_from_checkpoint
+
 from load_file_from_www import download_file_from_www
-import bert_emb.extract_features
-import bert_emb.modeling
-import bert_emb.tokenizationN
 
 
 # Set PATHs
 PATH_TO_SENTEVAL = os.path.join(os.path.dirname(__file__), '..')
 PATH_TO_DATA = os.path.join(os.path.dirname(__file__), '..', 'data')
-PATH_TO_BERT = os.path.join(os.path.dirname(__file__), 'bert_emb', 'data', 'multi_cased_L-12_H-768_A-12')
+PATH_TO_BERT = os.path.join(os.path.dirname(__file__), 'bert_data', 'multi_cased_L-12_H-768_A-12')
 
 # import SentEval
 sys.path.insert(0, PATH_TO_SENTEVAL)
@@ -32,65 +33,28 @@ def prepare(params, samples):
 
 def batcher(params, batch):
     batch = [sent if sent != [] else ['.'] for sent in batch]
-    embeddings = []
 
-    examples = []
-    unique_id = 0
-    for cur_sent in batch:
-        examples.append(
-            bert_emb.extract_features.InputExample(unique_id=unique_id, text_a=' '.join(cur_sent), text_b=None))
-        unique_id += 1
-    features = bert_emb.extract_features.convert_examples_to_features(
-        examples=examples, seq_length=params['bert']['max_seq_length'], tokenizer=params['bert']['tokenizer'])
-    unique_id_to_feature = {}
-    for feature in features:
-        unique_id_to_feature[feature.unique_id] = feature
+    token_input = []
+    seg_input = []
+    tokens_in_batch = []
+    for sent in batch:
+        tokens = list(filter(lambda it: it in params['bert']['dict'], sent))
+        if len(tokens) > (params['bert']['max_seq_len'] - 2):
+            tokens = tokens[:(params['bert']['max_seq_len'] - 2)]
+        tokens = ['[CLS]'] + tokens + ['[SEP]']
+        token_input.append([params['bert']['dict'][token] for token in tokens] +
+                           [0] * (params['bert']['max_seq_len'] - len(tokens)))
+        seg_input.append([0] * len(tokens) + [0] * (params['bert']['max_seq_len'] - len(tokens)))
+        tokens_in_batch.append(tokens)
+    token_input = np.asarray(token_input)
+    seg_input = np.asarray(seg_input)
 
-    input_fn = bert_emb.extract_features.input_fn_builder(
-        features=features, seq_length=params['bert']['max_seq_length'])
-    for result in params['bert']['estimator'].predict(input_fn, yield_single_examples=True):
-        unique_id = int(result["unique_id"])
-        feature = unique_id_to_feature[unique_id]
-        list_of_word_embeddings = []
-        for (i, token) in enumerate(feature.tokens):
-            new_word_embedding = []
-            for (j, layer_index) in enumerate(params['bert']['layer_indexes']):
-                layer_output = result["layer_output_%d" % j]
-                new_word_embedding += [round(float(x), 6) for x in layer_output[i:(i + 1)].flat]
-            list_of_word_embeddings.append(new_word_embedding)
-            del new_word_embedding
-        embeddings.append(np.max(list_of_word_embeddings, axis=0))
-        del list_of_word_embeddings
+    embeddings = np.zeros((len(batch), params['bert']['embedding_size']), dtype=np.float32)
+    predicts = params['bert']['model'].predict([token_input, seg_input])
+    for sent_idx in range(len(batch)):
+        embeddings[sent_idx] = np.max(predicts[sent_idx][1:(len(tokens_in_batch[sent_idx]) - 1)], axis=0)
 
-    del examples, features, unique_id_to_feature
-    
     return embeddings
-
-
-def initialize_bert(batch_size):
-    layer_indexes = [-1, -2, -3, -4]
-    bert_config = bert_emb.modeling.BertConfig.from_json_file(os.path.join(PATH_TO_BERT, 'bert_config.json'))
-    tokenizer = bert_emb.tokenizationN.FullTokenizer(
-        vocab_file=os.path.join(PATH_TO_BERT, 'vocab.txt'),
-        do_lower_case=True
-    )
-    run_config = tf.contrib.tpu.RunConfig(
-        master=None,
-        tpu_config=tf.contrib.tpu.TPUConfig(num_shards=1, per_host_input_for_training=False)
-    )
-    model_fn = bert_emb.extract_features.model_fn_builder(
-        bert_config=bert_config,
-        init_checkpoint=os.path.join(PATH_TO_BERT, 'bert_model.ckpt'),
-        layer_indexes=layer_indexes,
-        use_tpu=False,
-        use_one_hot_embeddings=False
-    )
-    estimator = tf.contrib.tpu.TPUEstimator(
-        use_tpu=False,
-        model_fn=model_fn,
-        config=run_config,
-        predict_batch_size=batch_size)
-    return {'tokenizer': tokenizer, 'estimator': estimator, 'max_seq_length': 128, 'layer_indexes': layer_indexes}
 
 
 # Set up logger
@@ -132,7 +96,24 @@ def check():
         with zipfile.ZipFile(PATH_TO_BERT + '.zip') as skipthoughts_zip:
             skipthoughts_zip.extractall(os.path.join(os.path.dirname(__file__), 'bert_emb', 'data'))
         os.remove(PATH_TO_BERT + '.zip')
-    params_senteval['bert'] = initialize_bert(batch_size=16)
+    token_dict = {}
+    with codecs.open(os.path.join(PATH_TO_BERT, 'bert_config.json'), 'r', 'utf8') as reader:
+        for line in reader:
+            token = line.strip()
+            token_dict[token] = len(token_dict)
+    with codecs.open(os.path.join(PATH_TO_BERT, 'bert_config.json'), 'r', 'utf8') as config:
+        config_data = json.load(config)
+    params_senteval['bert'] = {
+        'model': load_trained_model_from_checkpoint(
+            config_file=os.path.join(PATH_TO_BERT, 'bert_config.json'),
+            checkpoint_file=os.path.join(PATH_TO_BERT, 'bert_model.ckpt'),
+            training=False, seq_len=None
+        ),
+        'dict': token_dict,
+        'max_seq_len': config_data['max_position_embeddings'],
+        'embedding_size': config_data['pooler_fc_size']
+    }
+    del config_data
     se = senteval.engine.SE(params_senteval, batcher, prepare)
     transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
     results = se.eval(transfer_tasks)
