@@ -34,11 +34,18 @@ def batcher(params, batch):
     batch = [sent if sent != [] else ['.'] for sent in batch]
     embeddings = []
 
+    examples = []
+    unique_id = 0
+    for cur_sent in batch:
+        examples.append(
+            bert_emb.extract_features.InputExample(unique_id=unique_id, text_a=cur_sent, text_b=None))
+        unique_id += 1
     features = bert_emb.extract_features.convert_examples_to_features(
-        examples=batch, seq_length=params['bert']['max_seq_length'], tokenizer=params['bert']['tokenizer'])
+        examples=examples, seq_length=params['bert']['max_seq_length'], tokenizer=params['bert']['tokenizer'])
     unique_id_to_feature = {}
     for feature in features:
         unique_id_to_feature[feature.unique_id] = feature
+
     input_fn = bert_emb.extract_features.input_fn_builder(
         features=features, seq_length=params['bert']['max_seq_length'])
     for result in params['bert']['estimator'].predict(input_fn, yield_single_examples=True):
@@ -54,6 +61,8 @@ def batcher(params, batch):
             del new_word_embedding
         embeddings.append(np.max(list_of_word_embeddings, axis=0))
         del list_of_word_embeddings
+
+    del examples, features, unique_id_to_feature
     
     return embeddings
 
@@ -97,7 +106,6 @@ def check():
     if os.path.isdir(PATH_TO_BERT):
         do_download = (not os.path.isfile(os.path.join(PATH_TO_BERT, 'vocab.txt'))) or \
                       (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_config.json'))) or \
-                      (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt'))) or \
                       (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.index'))) or \
                       (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.meta'))) or \
                       (not os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.data-00000-of-00001')))
@@ -108,8 +116,6 @@ def check():
             os.remove(os.path.join(PATH_TO_BERT, 'vocab.txt'))
         if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_config.json')):
             os.remove(os.path.join(PATH_TO_BERT, 'bert_config.json'))
-        if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt')):
-            os.remove(os.path.join(PATH_TO_BERT, 'bert_model.ckpt'))
         if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.index')):
             os.remove(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.index'))
         if os.path.isfile(os.path.join(PATH_TO_BERT, 'bert_model.ckpt.meta')):
