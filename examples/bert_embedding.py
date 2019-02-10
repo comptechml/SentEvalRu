@@ -98,6 +98,7 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
 
 def check():
+    tf.logging.set_verbosity(tf.logging.ERROR)
     # Set params for SentEval
     params_senteval = {
         'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10, 'batch_size': 256,
