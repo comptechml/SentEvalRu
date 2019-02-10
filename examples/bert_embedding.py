@@ -97,12 +97,12 @@ def check():
             skipthoughts_zip.extractall(os.path.join(os.path.dirname(__file__), 'bert_data'))
         os.remove(PATH_TO_BERT + '.zip')
     token_dict = {}
-    with codecs.open(os.path.join(PATH_TO_BERT, 'bert_config.json'), 'r', 'utf8') as reader:
-        for line in reader:
+    with codecs.open(os.path.join(PATH_TO_BERT, 'vocab.txt'), 'r', 'utf8') as vocab_reader:
+        for line in vocab_reader:
             token = line.strip()
             token_dict[token] = len(token_dict)
-    with codecs.open(os.path.join(PATH_TO_BERT, 'bert_config.json'), 'r', 'utf8') as config:
-        config_data = json.load(config)
+    with codecs.open(os.path.join(PATH_TO_BERT, 'bert_config.json'), 'r', 'utf8') as config_reader:
+        config_data = json.load(config_reader)
     params_senteval['bert'] = {
         'model': load_trained_model_from_checkpoint(
             config_file=os.path.join(PATH_TO_BERT, 'bert_config.json'),
