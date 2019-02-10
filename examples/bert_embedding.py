@@ -94,7 +94,7 @@ def check():
             PATH_TO_BERT + '.zip'
         )
         with zipfile.ZipFile(PATH_TO_BERT + '.zip') as skipthoughts_zip:
-            skipthoughts_zip.extractall(os.path.join(os.path.dirname(__file__), 'bert_emb', 'data'))
+            skipthoughts_zip.extractall(os.path.join(os.path.dirname(__file__), 'bert_data'))
         os.remove(PATH_TO_BERT + '.zip')
     token_dict = {}
     with codecs.open(os.path.join(PATH_TO_BERT, 'bert_config.json'), 'r', 'utf8') as reader:
