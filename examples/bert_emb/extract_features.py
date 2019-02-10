@@ -23,8 +23,8 @@ import collections
 import json
 import re
 
-import modeling
-import tokenizationN
+import bert_emb.modeling as modeling
+import bert_emb.tokenizationN as tokenizationN
 import tensorflow as tf
 
 def del_all_flags(FLAGS):
