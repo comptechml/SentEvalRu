@@ -38,7 +38,7 @@ def batcher(params, batch):
     seg_input = []
     tokens_in_batch = []
     for sent in batch:
-        tokens = list(map(lambda it: it if it in params['bert']['dict'] else '<UNK>', sent))
+        tokens = list(map(lambda it: it if it in params['bert']['dict'] else '[UNK]', sent))
         if len(tokens) > (params['bert']['max_seq_len'] - 2):
             tokens = tokens[:(params['bert']['max_seq_len'] - 2)]
         tokens = ['[CLS]'] + tokens + ['[SEP]']
