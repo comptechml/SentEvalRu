@@ -13,6 +13,7 @@ import tensorflow as tf
 import keras.backend as K
 from keras_bert import load_trained_model_from_checkpoint
 
+from bert.tokenization import FullTokenizer
 from load_file_from_www import download_file_from_www
 
 
@@ -33,16 +34,19 @@ def prepare(params, samples):
 
 
 def batcher(params, batch):
+    n_emb = params['bert']['embedding_size']
     batch = [sent if sent != [] else ['.'] for sent in batch]
 
     token_input = []
     seg_input = []
     tokens_in_batch = []
     for sent in batch:
-        tokens = list(map(lambda it: it if it in params['bert']['dict'] else '[UNK]', sent))
+        tokens = params['bert']['tokenizer'].tokenize(' '.join(sent))
         if len(tokens) > (params['bert']['max_seq_len'] - 2):
             tokens = tokens[:(params['bert']['max_seq_len'] - 2)]
         tokens = ['[CLS]'] + tokens + ['[SEP]']
+        print('sent', ' '.join(sent))  # for debug
+        print('tokens', ' '.join(tokens))  # for debug
         token_input.append([params['bert']['dict'][token] for token in tokens] +
                            [0] * (params['bert']['max_seq_len'] - len(tokens)))
         seg_input.append([0] * len(tokens) + [0] * (params['bert']['max_seq_len'] - len(tokens)))
@@ -50,10 +54,15 @@ def batcher(params, batch):
     token_input = np.asarray(token_input)
     seg_input = np.asarray(seg_input)
 
-    embeddings = np.zeros((len(batch), params['bert']['embedding_size']), dtype=np.float32)
+    embeddings = np.zeros((len(batch), n_emb * 3), dtype=np.float32)
     predicts = params['bert']['model'].predict([token_input, seg_input])
     for sent_idx in range(len(batch)):
-        embeddings[sent_idx] = np.max(predicts[sent_idx][1:(len(tokens_in_batch[sent_idx]) - 1)], axis=0)
+        token_indices = list(filter(lambda token_idx: tokens_in_batch[sent_idx][token_idx] != '[UNK]',
+                                    range(1, len(tokens_in_batch[sent_idx]) - 1)))
+        if len(token_indices) > 0:
+            embeddings[sent_idx][0:n_emb] = np.max(predicts[sent_idx][token_indices], axis=0)
+        embeddings[sent_idx][n_emb:(2 * n_emb)] = predicts[sent_idx][0]
+        embeddings[sent_idx][(2 * n_emb):(3 * n_emb)] = predicts[sent_idx][len(tokens_in_batch[sent_idx]) - 1]
 
     return embeddings
 
@@ -114,6 +123,7 @@ def check():
             training=False, seq_len=None
         ),
         'dict': token_dict,
+        'tokenizer': FullTokenizer(os.path.join(PATH_TO_BERT, 'vocab.txt')),
         'max_seq_len': config_data['max_position_embeddings'],
         'embedding_size': config_data['pooler_fc_size']
     }
