@@ -45,8 +45,6 @@ def batcher(params, batch):
         if len(tokens) > (params['bert']['max_seq_len'] - 2):
             tokens = tokens[:(params['bert']['max_seq_len'] - 2)]
         tokens = ['[CLS]'] + tokens + ['[SEP]']
-        print('sent', ' '.join(sent))  # for debug
-        print('tokens', ' '.join(tokens))  # for debug
         token_input.append([params['bert']['dict'][token] for token in tokens] +
                            [0] * (params['bert']['max_seq_len'] - len(tokens)))
         seg_input.append([0] * len(tokens) + [0] * (params['bert']['max_seq_len'] - len(tokens)))
@@ -123,7 +121,7 @@ def check():
             training=False, seq_len=None
         ),
         'dict': token_dict,
-        'tokenizer': FullTokenizer(os.path.join(PATH_TO_BERT, 'vocab.txt')),
+        'tokenizer': FullTokenizer(os.path.join(PATH_TO_BERT, 'vocab.txt'), do_lower_case=False),
         'max_seq_len': config_data['max_position_embeddings'],
         'embedding_size': config_data['pooler_fc_size']
     }
