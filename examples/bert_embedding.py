@@ -10,6 +10,7 @@ import zipfile
 import numpy as np
 import tensorflow as tf
 
+import keras.backend as K
 from keras_bert import load_trained_model_from_checkpoint
 
 from load_file_from_www import download_file_from_www
@@ -63,6 +64,9 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 
 def check():
     tf.logging.set_verbosity(tf.logging.ERROR)
+    config = tf.ConfigProto()
+    config.gpu_options.per_process_gpu_memory_fraction = 0.4
+    K.set_session(tf.Session(config=config))
     # Set params for SentEval
     params_senteval = {
         'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10, 'batch_size': 256,
