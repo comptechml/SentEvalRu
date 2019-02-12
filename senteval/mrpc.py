@@ -25,9 +25,9 @@ class MRPCEval(object):
         logging.info('***** Transfer task : MRPC *****\n\n')
         self.seed = seed
         train = self.loadFile(os.path.join(task_path,
-                              'paraphrase_train.csv'))
+                              'train.csv'))
         test = self.loadFile(os.path.join(task_path,
-                             'paraphrase_test.csv'))
+                             'test.csv'))
         self.mrpc_data = {'train': train, 'test': test}
 
     def do_prepare(self, params, prepare):

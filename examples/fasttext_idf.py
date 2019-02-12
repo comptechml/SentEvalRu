@@ -21,10 +21,11 @@ import senteval
 
 
 # Create dictionary
-def create_dictionary(sentences, threshold=0):
+def create_dictionary(threshold=0):
     words = {}
     doc_number = 0
-    for s in sentences:
+    input = open('idf.csv', 'r', encoding="utf-8")
+    for s in input:
         doc_number += 1
         for word in s:
             words[word] = words.get(word, 0) + 1
@@ -68,7 +69,7 @@ def get_wordvec(path_to_vec, word2id):
 
 # SentEval prepare and batcher
 def prepare(params, samples):
-    _, params.word2id, doc_count, word_count = create_dictionary(samples)
+    _, params.word2id, doc_count, word_count = create_dictionary()
     params.word_vec = get_wordvec(PATH_TO_VEC, params.word2id)
     params.wvec_dim = 300
     params.doc_count = doc_count
@@ -120,7 +121,7 @@ def check():
             os.path.join(os.path.dirname(__file__), 'fasttext', 'ft_native_300_ru_wiki_lenta_nltk_word_tokenize.bin')
         )
     se = senteval.engine.SE(params_senteval, batcher, prepare)
-    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
+    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'ProzaCl', 'TREC', 'STS', 'SICK']
     results = se.eval(transfer_tasks)
     return results
 

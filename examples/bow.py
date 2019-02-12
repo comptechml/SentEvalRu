@@ -122,7 +122,7 @@ def check():
             os.path.join(os.path.dirname(__file__), 'fasttext', 'ft_native_300_ru_wiki_lenta_nltk_word_tokenize.bin')
         )
     se = senteval.engine.SE(params_senteval, batcher, prepare)
-    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
+    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'ProzaCl', 'TREC', 'STS', 'SICK']
     # transfer_tasks = 'SST2'
     results =  se.eval(transfer_tasks)
     return results

@@ -69,7 +69,7 @@ def check():
         os.path.join(PATH_TO_SKIPTHOUGHT, 'all.norm-sz100-w10-cb0-it1-min100.w2v')
     )
     se = senteval.engine.SE(params_senteval, batcher, prepare)
-    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
+    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'ProzaCl', 'TREC', 'STS', 'SICK']
     results = se.eval(transfer_tasks)
     return results
 

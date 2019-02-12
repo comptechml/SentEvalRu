@@ -127,7 +127,7 @@ def check():
     }
     del config_data
     se = senteval.engine.SE(params_senteval, batcher, prepare)
-    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'TREC', 'STS', 'SICK']
+    transfer_tasks = ['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'ProzaCl', 'TREC', 'STS', 'SICK']
     results = se.eval(transfer_tasks)
     return results
 

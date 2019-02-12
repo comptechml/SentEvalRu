@@ -17,6 +17,7 @@ from senteval.sst import SSTEval
 from senteval.trec import TRECEval
 from senteval.sts import STSBenchmarkEval
 from senteval.sick import SICKRelatednessEval
+from senteval.mrpc import MRPCEval
 
 class SE(object):
     def __init__(self, params, batcher, prepare=None):
@@ -54,7 +55,7 @@ class SE(object):
         if name == 'SST2':
             self.evaluation = SSTEval(tpath + '/SST/binary', 'SST binary', nclasses=2, seed=self.params.seed)
         elif name == 'SST3':
-            self.evaluation = SSTEval(tpath + '/SST/dialog-2016', 'SST fine-grained', nclasses=3, seed=self.params.seed)
+            self.evaluation = SSTEval(tpath + '/SST/dialog-2016', 'SST3', nclasses=3, seed=self.params.seed)
         elif name == 'ReadabilityCl':
             self.evaluation = SSTEval(tpath + '/Readability classifier', 'readability classifier', nclasses=10, seed=self.params.seed)
         elif name == 'TagCl':
@@ -69,8 +70,8 @@ class SE(object):
             self.evaluation = STSBenchmarkEval(tpath + '/STS', seed=self.params.seed)
         elif name == 'SICK':
             self.evaluation = SICKRelatednessEval(tpath + '/SICK', seed=self.params.seed)
-
-        # 'TREC', 'STS', 'SICK'
+        elif name == 'MRPC':
+            self.evaluation = MRPCEval(tpath + '/MRPC', seed=self.params.seed)
 
         self.params.current_task = name
         self.evaluation.do_prepare(self.params, self.prepare)
