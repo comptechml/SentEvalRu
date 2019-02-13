@@ -11,6 +11,8 @@ Generic sentence evaluation scripts wrapper
 
 '''
 from __future__ import absolute_import, division, unicode_literals
+import logging
+import time
 
 from senteval import utils
 from senteval.sst import SSTEval
@@ -76,6 +78,10 @@ class SE(object):
         self.params.current_task = name
         self.evaluation.do_prepare(self.params, self.prepare)
 
+        start = time.time()
         self.results = self.evaluation.run(self.params, self.batcher)
+        end = time.time()
+        self.results["time"] = end - start
+        logging.debug('\nTime for task : {0} sec\n'.format(self.results["time"]))
 
         return self.results
