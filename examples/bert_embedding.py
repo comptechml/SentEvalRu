@@ -52,15 +52,10 @@ def batcher(params, batch):
     token_input = np.asarray(token_input)
     seg_input = np.asarray(seg_input)
 
-    embeddings = np.zeros((len(batch), n_emb * 3), dtype=np.float32)
+    embeddings = np.zeros((len(batch), n_emb), dtype=np.float32)
     predicts = params['bert']['model'].predict([token_input, seg_input])
     for sent_idx in range(len(batch)):
-        token_indices = list(filter(lambda token_idx: tokens_in_batch[sent_idx][token_idx] != '[UNK]',
-                                    range(1, len(tokens_in_batch[sent_idx]) - 1)))
-        if len(token_indices) > 0:
-            embeddings[sent_idx][0:n_emb] = np.max(predicts[sent_idx][token_indices], axis=0)
-        embeddings[sent_idx][n_emb:(2 * n_emb)] = predicts[sent_idx][0]
-        embeddings[sent_idx][(2 * n_emb):(3 * n_emb)] = predicts[sent_idx][len(tokens_in_batch[sent_idx]) - 1]
+        embeddings[sent_idx] = predicts[sent_idx][0]
 
     return embeddings
 
