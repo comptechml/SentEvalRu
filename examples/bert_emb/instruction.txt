@@ -1,5 +1,0 @@
-Чтобы использовать BERT для векторизации текста, нужно загрузить обученную модель отсюда https://storage.googleapis.com/bert_models/2018_11_23/multi_cased_L-12_H-768_A-12.zip
-(для других языков можно найти модели здесь https://github.com/google-research/bert), и распаковать ее в папку, например, tmp/multi. 
-Файлы "extract_feature.py", "modeling.py", "tokenizationN.py" необходимы для работы файла "bert_embeddins.py", поэтому нужно скачать 
-их и сохранить в одну папку с "bert_embeddins.py". В "bert_embeddins.py" нужно вместо tmp/multi прописать адрес папки, 
-куда распаковали модель  

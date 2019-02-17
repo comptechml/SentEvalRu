@@ -1,0 +1,3 @@
+skip-thoughts-files/*
+skip-thoughts-files
+__pycache__

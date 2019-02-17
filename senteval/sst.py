@@ -25,7 +25,7 @@ class SSTEval(object):
 
         self.nclasses = nclasses
         self.task_name = task_name
-        logging.debug('***** Transfer task :%s *****\n\n', self.task_name)
+        logging.debug('***** Transfer task : %s *****\n\n', self.task_name)
 
         train = self.loadFile(os.path.join(task_path, 'train.csv'))
         dev = self.loadFile(os.path.join(task_path, 'dev.csv'))
