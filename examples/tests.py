@@ -1,5 +1,5 @@
 import unittest
-from examples import bow, fasttext_idf, skip_thought
+from examples import bow, fasttext_idf, skip_thoughts
 
 
 class TestWorking(unittest.TestCase):
@@ -11,7 +11,7 @@ class TestWorking(unittest.TestCase):
         self.assertTrue(fasttext_idf.check() != "")
 
     def test_skip_thought(self):
-        self.assertTrue(skip_thought.check() != "")
+        self.assertTrue(skip_thoughts.check() != "")
 
 
 if __name__ == '__main__':
