@@ -8,9 +8,55 @@ We were inspired to create this library by [SentEval](https://arxiv.org/abs/1803
 This project was implemented in the context of winter school [ComptechNsk'19](http://comptech.nsk.su/), the idea of creating SentEvalRu belongs to  [MIPT](https://mipt.ru/english/)'s Neural Networks and Deep Learning Lab who develops artificial intelligence system  [iPavlov](https://ipavlov.ai/).
 
 Project participants:
-- Mosolova Anna (project manager)
-- Obukhova Alisa (technical writer)
-- Pauls Alexey (engineer)
-- Stroganov Mikhail (engineer)
-- Timasova Ekaterina (researcher)
-- Shugalevskaya Natalya (researcher)
+- [Mosolova Anna](https://github.com/anya-bel) (project manager)
+- [Obukhova Alisa](https://github.com/lbdlbdlbdl) (technical writer)
+- [Pauls Aleksey](https://github.com/AlekseyPauls) (engineer)
+- [Stroganov Mikhail](https://github.com/MikhailStroganov) (engineer)
+- [Timasova Ekaterina](https://github.com/KaterinaTimasova) (researcher)
+- [Shugalevskaya Natalya](https://github.com/nshugalevkaia) (researcher)
+
+### What tasks does it help to solve?
+*Sentence embeddings* are used in a wide range of tasks where NLP systems are required. For example:
+- intent classifier;
+- QA systems;
+- sentiment analysis;
+- machine translation;
+- [document clustering](https://en.wikipedia.org/wiki/Document_clustering).
+
+Our tool helps to evaluate sentence embeddings, and that could be useful for everyone, who solves these tasks or analyses embeddings' quality for russian scientifically.
+
+### Available models of text representation
+
+Our project currently includes following models of text representation for the russian language:
+- [Bert](https://arxiv.org/pdf/1810.04805.pdf) [2]
+- [FastText](https://fasttext.cc/) [4]
+- FastText+IDF [4] [5]
+- [Skip-Thought](https://arxiv.org/abs/1506.06726) [6]
+
+## Evaluation and tasks
+There is no way to evaluate embeddings' quality direclty so we can only solve some NLP tasks using these embeddings and evaluate them depending on the results of these systems.
+
+For example, we can use following tasks:
+- sentiment analysis;
+- named-entity recognition;
+- topic modelling;
+etc.
+
+We suggest evaluating embeddings by means of these tasks:
+
+|Tag| Task     	| Type                       | Description                       |
+|----------------|-------------|---------------------------|--------------------------------|
+|MRPC| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection |Является ли одно предложение перефразом второго|
+|SST-3| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) | ternary sentiment analysis |Определение тональности текста по трем классам: позитивный (1), нейтральный (0), негативный (-1)|
+|SST-2| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis |Определение тональности текста по двум классам: позитивный (1), негативный (-1)|
+|TagCl| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tag classifier |Определение тэга новости из корпуса новостей Interfax|
+|ReadabilityCl| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | Readability Classifier | Определение сложности чтения и восприятия текста от 0 до 10 |
+|PoemsCl| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | genre classifier | Определение жанра стихотворения |
+|ProzaCl| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) | genre classifier | Определение жанра прозаических произведений |
+|TREC| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | question-type classification | Определение типа вопроса (о сущности, о человеке, об описании, о месте и т.д.) |
+|SICK| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | natural language inference | Определение, является ли второе предложение логическим выводом, логическим противоречием или нейтральным по отношению к первому |
+|STS| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный) | semantic textual similarity | Оценка схожести текстов от 0 до 5 |
+
+Более подробную информацию о данных вы можете найти в **/data**
+
+---
