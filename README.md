@@ -50,17 +50,16 @@ SentEvalRu позволяет вам оценить эмбеддинги пре�
 
 |Краткое название| Задача     	| Тип                       | Описание                       |
 |----------------|-------------|---------------------------|--------------------------------|
-|| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection||
-|| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis||
-|| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis ||
-|| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tags classifier ||
-|| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | readability classifier ||
-|| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | tag classifier ||
-|| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) |tag classifier ||
-|| Genre classification (kinopoisk) | tag classifier ||
-|| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | question-type classification ||
-|| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | natural language inference ||
-|| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный) | semantic textual similarity||
+|MRPC| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection||
+|SST-3| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis||
+|SST-2| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis ||
+|TagCl| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tags classifier ||
+|ReadabilityCl| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | readability classifier ||
+|PoemsCl| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | tag classifier ||
+|ProzaCl| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) |tag classifier ||
+|TREC| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | question-type classification ||
+|SICK| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | natural language inference ||
+|STS| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный) | semantic textual similarity||
 
 Более подробную информацию о данных вы можете найти в **/data**
 
