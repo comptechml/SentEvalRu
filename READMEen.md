@@ -173,7 +173,7 @@ dropout:                    # dropout for MLP
 ```
 
 
-## Ссылки на научные публикации
+## References
 
 [1] A. Conneau, D. Kiela, [*SentEval: An Evaluation Toolkit for Universal Sentence Representations*](https://arxiv.org/abs/1803.05449)
 
