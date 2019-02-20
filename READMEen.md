@@ -60,3 +60,130 @@ We suggest evaluating embeddings by means of these tasks:
 Futher information is available in **/data**
 
 ---
+
+## Prerequisites
+
+You should install all required modules before the start:
+
+* Python 3 with [NumPy](http://www.numpy.org/)/[SciPy](http://www.scipy.org/)
+* [Pytorch](http://pytorch.org/)>=0.4
+* [scikit-learn](http://scikit-learn.org/stable/index.html)>=0.18.0
+* [TensorFlow](https://www.tensorflow.org/) >=1.12.0
+* [Keras](https://keras.io/) >=2.2.4
+* ...
+We reccomend using [Anaconda](https://www.anaconda.com/distribution/) package or you can just run the following command:
+```
+pip3 install -r requirements.txt
+```
+
+## Setup
+```
+git init
+git clone https://github.com/comptechml/SentEvalRu.git
+cd SentEvalRu
+```
+You should store your datasets in */data*, and you could add your examples (new embeddings) to */examples*.
+
+## Examples
+
+Available tasks for russian are situated in  */examples*.
+
+## How to use SentEval
+
+To evaluate your sentence embeddings, SentEval requires that you implement two functions:
+
+1. **prepare** (sees the whole dataset of each task and can thus construct the word vocabulary, the dictionary of word vectors etc)
+2. **batcher** (transforms a batch of text sentences into sentence embeddings)
+
+
+### 1.) prepare(params, samples) (optional)
+
+*batcher* only sees one batch at a time while the *samples* argument of *prepare* contains all the sentences of a task.
+
+```
+prepare(params, samples)
+```
+* *params*: senteval parameters.
+* *samples*: list of all sentences from the tranfer task.
+* *output*: No output. Arguments stored in "params" can further be used by *batcher*.
+
+*Example*: in bow.py, prepare is is used to build the vocabulary of words and construct the "params.word_vect* dictionary of word vectors.
+
+
+### 2.) batcher(params, batch)
+```
+batcher(params, batch)
+```
+* *params*: senteval parameters.
+* *batch*: numpy array of text sentences (of size params.batch_size)
+* *output*: numpy array of sentence embeddings (of size params.batch_size)
+
+*Example*: in bow.py, batcher is used to compute the mean of the word vectors for each sentence in the batch using params.word_vec. Use your own encoder in that function to encode sentences.
+
+### 3.) evaluation on transfer tasks
+
+After having implemented the batch and prepare function for your own sentence encoder,
+
+1) to perform the actual evaluation, first import senteval and set its parameters:
+```python
+import senteval
+params = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10}
+```
+
+2) (optional) set the parameters of the classifier (when applicable):
+```python
+params['classifier'] = {'nhid': 0, 'optim': 'adam', 'batch_size': 64,
+                                 'tenacity': 5, 'epoch_size': 4}
+```
+You can choose **nhid=0** (Logistic Regression) or **nhid>0** (MLP) and define the parameters for training.
+
+3) Create an instance of the class SE:
+```python
+se = senteval.engine.SE(params, batcher, prepare)
+```
+
+4) define the set of transfer tasks and run the evaluation:
+```python
+transfer_tasks = ['MR', 'SICKEntailment', 'STS14', 'STSBenchmark']
+results = se.eval(transfer_tasks)
+```
+The current list of available tasks is:
+```python
+['SST2', 'SST3', 'MRPC', 'ReadabilityCl', 'TagCl', 'PoemsCl', 'ProzaCl', 'TREC', 'STS', 'SICK']
+```
+
+## SentEval parameters
+Global parameters of SentEval:
+```bash
+# senteval parameters
+task_path                   # path to SentEval datasets (required)
+seed                        # seed
+usepytorch                  # use cuda-pytorch (else scikit-learn) where possible
+kfold                       # k-fold validation for MR/CR/SUB/MPQA.
+```
+
+Parameters of the classifier:
+```bash
+nhid:                       # number of hidden units (0: Logistic Regression, >0: MLP); Default nonlinearity: Tanh
+optim:                      # optimizer ("sgd,lr=0.1", "adam", "rmsprop" ..)
+tenacity:                   # how many times dev acc does not increase before training stops
+epoch_size:                 # each epoch corresponds to epoch_size pass on the train set
+max_epoch:                  # max number of epoches
+dropout:                    # dropout for MLP
+```
+
+
+## Ссылки на научные публикации
+
+[1] A. Conneau, D. Kiela, [*SentEval: An Evaluation Toolkit for Universal Sentence Representations*](https://arxiv.org/abs/1803.05449)
+
+[2] Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova, [*BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*
+](https://arxiv.org/abs/1810.04805)
+
+[3] Daniel Cer, Yinfei Yang, Sheng-yi Kong, ... [*Universal Sentence Encoder*](https://arxiv.org/abs/1803.11175)
+
+[4] A. Joulin, E. Grave, P. Bojanowski, T. Mikolov, [*Bag of Tricks for Efficient Text Classification*](https://arxiv.org/abs/1607.01759)
+
+[5] Martin Klein, Michael L. Nelson, [*Approximating Document Frequency with Term Count Values*](https://arxiv.org/abs/0807.3755)
+
+[6] Ryan Kiros, Yukun Zhu, Ruslan Salakhutdinov, Richard S. Zemel, Antonio Torralba, Raquel Urtasun, and Sanja Fidler, [*Skip-Thought Vectors*]((https://arxiv.org/abs/1506.06726))
