@@ -48,19 +48,18 @@
 
 SentEvalRu позволяет вам оценить эмбеддинги предложений для следующих [задач](\data\README.md):
 
-| Задача     	| Тип                       |
-|----------	|-----------------------------|
-| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection|
-| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |third-labeled sentiment analysis|
-| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis |
-| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tags classifier |
-| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | readability classifier |
-| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | tag classifier |
-| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) |tag classifier |
-| Genre classification (kinopoisk) | tag classifier |
-| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | question-type classification |
-| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | natural language inference |
-| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный) | semantic textual similarity|
+|Тэг| Задача     	| Тип                       | Описание                       |
+|----------------|-------------|---------------------------|--------------------------------|
+|MRPC| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | Обнаружение перефраза|Является ли одно предложение перефразом второго|
+|SST-3| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) |Трехклассовый анализ тональности|Определение тональности текста по трем классам: позитивный (1), нейтральный (0), негативный (-1)|
+|SST-2| [SST/binary](http://study.mokoron.com/) | Двухклассовый анализ тональности |Определение тональности текста по двум классам: позитивный (1), негативный (-1)|
+|TagCl| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | Классификатор тэгов |Определение тэга новости из корпуса новостей Interfax|
+|ReadabilityCl| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | Классификатор сложности текста | Определение сложности чтения и восприятия текста от 0 до 10 |
+|PoemsCl| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | Классификатор жанра | Определение жанра стихотворения |
+|ProzaCl| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) |Классификатор жанра | Определение жанра прозаических произведений |
+|TREC| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | Классификация по типу вопроса | Определение типа вопроса (о сущности, о человеке, об описании, о месте и т.д.) |
+|SICK| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | Логический вывод естественного языка | Определение, является ли второе предложение логическим выводом, логическим противоречием или нейтральным по отношению к первому |
+|STS| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный) | Семантиическое сходство текстов | Оценка схожести текстов от 0 до 5 |
 
 Более подробную информацию о данных вы можете найти в **/data**
 
