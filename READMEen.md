@@ -18,9 +18,9 @@ Project participants:
 ### What tasks does it help to solve?
 *Sentence embeddings* are used in a wide range of tasks where NLP systems are required. For example:
 - intent classifier;
-- QA systems;
-- sentiment analysis;
-- machine translation;
+- [QA systems](https://en.wikipedia.org/wiki/Question_answering);
+- [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis);
+- [machine translation](https://en.wikipedia.org/wiki/Machine_translation);
 - [document clustering](https://en.wikipedia.org/wiki/Document_clustering).
 
 Our tool helps to evaluate sentence embeddings, and that could be useful for everyone, who solves these tasks or analyses embeddings' quality for russian scientifically.
@@ -46,10 +46,10 @@ We suggest evaluating embeddings by means of these tasks:
 
 |Tag| Task     	| Type                       | Description                       |
 |----------------|-------------|---------------------------|--------------------------------|
-|MRPC| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection |Является ли одно предложение перефразом второго|
-|SST-3| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) | ternary sentiment analysis |Определение тональности текста по трем классам: позитивный (1), нейтральный (0), негативный (-1)|
-|SST-2| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis |Определение тональности текста по двум классам: позитивный (1), негативный (-1)|
-|TagCl| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tag classifier |Определение тэга новости из корпуса новостей Interfax|
+|MRPC| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection | Detect whether one sentence is the paraphrу of another one |
+|SST-3| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) | ternary sentiment analysis | Detect text sentiment (positive (1), neutral (0), negative (-1))|
+|SST-2| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis | Detect text sentiment (positive (1), negative (-1)) |
+|TagCl| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tag classifier | Detect tag of piece of news from Interfax Corpus |
 |ReadabilityCl| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | Readability Classifier | Определение сложности чтения и восприятия текста от 0 до 10 |
 |PoemsCl| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | genre classifier | Определение жанра стихотворения |
 |ProzaCl| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) | genre classifier | Определение жанра прозаических произведений |
