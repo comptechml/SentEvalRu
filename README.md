@@ -1,7 +1,7 @@
 
 # SentEvalRu
 
-[Russian](https://github.com/comptechml/SentEvalRu/blob/master/READMEen.md)|[English](https://github.com/comptechml/SentEvalRu/blob/master/README.md)
+[Russian](https://github.com/comptechml/SentEvalRu/blob/master/README.md)|[English](https://github.com/comptechml/SentEvalRu/blob/master/READMEen.md)
 --
 В рамках данного проекта была разработана библиотека для оценки качества [эмбеддингов предложений](https://en.wikipedia.org/wiki/Sentence_embedding) русских текстов. С её помощью мы можем оценить обобщающую способность эмбеддингов, используя их как признаки (features) для решения разнообразных *задач компьютерной лингвистики*.
 
