@@ -73,7 +73,7 @@ You should install all required modules before the start:
 * [TensorFlow](https://www.tensorflow.org/) >=1.12.0
 * [Keras](https://keras.io/) >=2.2.4
 * ...
-We reccomend using [Anaconda](https://www.anaconda.com/distribution/) package or you can just run the following command:
+We recommend using [Anaconda](https://www.anaconda.com/distribution/) package, or you can just run the following command:
 ```
 pip3 install -r requirements.txt
 ```
