@@ -1,6 +1,6 @@
 # SentEvalRu
 
-[Russian](https://github.com/comptechml/SentEvalRu/blob/master/READMEen.md)|[English](https://github.com/comptechml/SentEvalRu/blob/master/README.md)
+[Russian](https://github.com/comptechml/SentEvalRu/blob/master/README.md)|[English](https://github.com/comptechml/SentEvalRu/blob/master/READMEen.md)
 -
 This project was dedicated to creating a library for evaluating the quality of [sentence embeddings](https://en.wikipedia.org/wiki/Sentence_embedding) for the russian language. We assess their generalization power by using them as features on a broad and diverse set of tasks. SentEvalRu currently includes 17 NLP tasks. 
 
