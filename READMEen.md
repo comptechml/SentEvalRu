@@ -46,17 +46,17 @@ We suggest evaluating embeddings by means of these tasks:
 
 |Tag| Task     	| Type                       | Description                       |
 |----------------|-------------|---------------------------|--------------------------------|
-|MRPC| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection | Detect whether one sentence is the paraphrу of another one |
-|SST-3| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) | ternary sentiment analysis | Detect text sentiment (positive (1), neutral (0), negative (-1))|
-|SST-2| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis | Detect text sentiment (positive (1), negative (-1)) |
-|TagCl| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tag classifier | Detect tag of piece of news from Interfax Corpus |
-|ReadabilityCl| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | Readability Classifier | Определение сложности чтения и восприятия текста от 0 до 10 |
-|PoemsCl| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | genre classifier | Определение жанра стихотворения |
-|ProzaCl| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) | genre classifier | Определение жанра прозаических произведений |
-|TREC| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (переведенный) | question-type classification | Определение типа вопроса (о сущности, о человеке, об описании, о месте и т.д.) |
-|SICK| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (переведенный) | natural language inference | Определение, является ли второе предложение логическим выводом, логическим противоречием или нейтральным по отношению к первому |
-|STS| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (переведенный) | semantic textual similarity | Оценка схожести текстов от 0 до 5 |
+|MRPC| [MRPC](https://github.com/Koziev/NLP_Datasets/tree/master/ParaphraseDetection/Data) | paraphrase detection | Detect whether one sentence is the paraphrase of another one |
+|SST-3| [SST/dialog-2016](http://www.dialog-21.ru/evaluation/2016/sentiment/) | ternary sentiment analysis | Detect a text sentiment (positive (1), neutral (0), negative (-1))|
+|SST-2| [SST/binary](http://study.mokoron.com/) | binary sentiment analysis | Detect a text sentiment (positive (1), negative (-1)) |
+|TagCl| [Tags classifier](https://tatianashavrina.github.io/taiga_site/downloads) | tag classifier | Detect a tag of news from Interfax Corpus |
+|ReadabilityCl| [Readability classifier](https://tatianashavrina.github.io/taiga_site/downloads) | Readability Classifier | Detect a readibility grade of a text (1-10) |
+|PoemsCl| [Poems classifier](https://tatianashavrina.github.io/taiga_site/) | genre classifier | Detect poem's genre |
+|ProzaCl| [Proza classifier](https://tatianashavrina.github.io/taiga_site/) | genre classifier | Detect prose's genre |
+|TREC| [TREC](http://cogcomp.cs.illinois.edu/Data/QA/QC/) (translated) | question-type classification | Detect a type of a question (about entity, human, description, location etc.) |
+|SICK| [SICK-E](http://clic.cimec.unitn.it/composes/sick.html) (translated) | natural language inference | Detect whether a second sentence is an entailment, a contradiction, or neutral of the first one) |
+|STS| [STS](https://www.cs.york.ac.uk/semeval-2012/task6/) (translated) | semantic textual similarity | Detect a semantic similarity grade of two texts |
 
-Более подробную информацию о данных вы можете найти в **/data**
+Futher information is available in **/data**
 
 ---
