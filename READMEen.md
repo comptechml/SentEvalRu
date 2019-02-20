@@ -1,6 +1,6 @@
 # SentEvalRu
 
-This project was dedicated to creating a library for evaluating the quality of [sentence embeddings] (https://en.wikipedia.org/wiki/Sentence_embedding) for the russian language. We assess their generalization power by using them as features on a broad and diverse set of tasks. SentEval currently includes 17 NLP tasks. 
+This project was dedicated to creating a library for evaluating the quality of [sentence embeddings](https://en.wikipedia.org/wiki/Sentence_embedding) for the russian language. We assess their generalization power by using them as features on a broad and diverse set of tasks. SentEval currently includes 17 NLP tasks. 
 
 **Our goal** is to evaluate different algorithms of text representation with datasets in russian. This is the first approach of sucg task for the russian language.
 We were inspired to create this library by the [SentEval](https://arxiv.org/abs/1803.05449)[1].
