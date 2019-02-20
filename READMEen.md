@@ -30,7 +30,7 @@ Our tool helps to evaluate sentence embeddings, and that could be useful for eve
 Our project currently includes following models of text representation for the russian language:
 - [Bert](https://arxiv.org/pdf/1810.04805.pdf) [2]
 - [FastText](https://fasttext.cc/) [4]
-- FastText+IDF [4] [5]
+- [FastText](https://fasttext.cc/)+[IDF](https://en.wikipedia.org/wiki/Tf–idf) [4] [5]
 - [Skip-Thought](https://arxiv.org/abs/1506.06726) [6]
 
 ## Evaluation and tasks
