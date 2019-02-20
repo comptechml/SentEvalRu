@@ -6,3 +6,11 @@ This project was dedicated to creating a library for evaluating the quality of [
 We were inspired to create this library by [SentEval](https://arxiv.org/abs/1803.05449)[1].
 
 This project was implemented in the context of winter school [ComptechNsk'19](http://comptech.nsk.su/), the idea of creating SentEvalRu belongs to  [MIPT](https://mipt.ru/english/)'s Neural Networks and Deep Learning Lab who develops artificial intelligence system  [iPavlov](https://ipavlov.ai/).
+
+Project participants:
+- Mosolova Anna (project manager)
+- Obukhova Alisa (technical writer)
+- Pauls Alexey (engineer)
+- Stroganov Mikhail (engineer)
+- Timasova Ekaterina (researcher)
+- Shugalevskaya Natalya (researcher)
