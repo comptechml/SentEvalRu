@@ -154,7 +154,7 @@ def check():
     elif params.model == 'esn':
         network = ESN(params)
     else:
-        network = "borep"
+        network = BOREP(params)
 
     # Set params for SentEval
     params_senteval = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10,
