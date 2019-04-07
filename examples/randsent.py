@@ -149,7 +149,12 @@ def check():
 
     if params.gpu:
         torch.cuda.manual_seed(seed)
-    network = RandLSTM(params)
+    if params.model == 'lstm':
+        network = RandLSTM(params)
+    elif params.model == 'esn':
+        network = ESN(params)
+    else:
+        network = "borep"
 
     # Set params for SentEval
     params_senteval = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10,
