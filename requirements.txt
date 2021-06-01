@@ -52,6 +52,6 @@ termcolor==1.1.0
 Theano==1.0.4
 torch==1.0.0
 torchvision==0.2.1
-urllib3==1.24.1
+urllib3==1.26.5
 Werkzeug==0.14.1
 yandex-translater==6.0
