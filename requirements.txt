@@ -32,7 +32,7 @@ nltk==3.4
 numpy==1.16.1
 pandas==0.24.0
 Pillow==5.4.1
-protobuf==3.6.1
+protobuf==3.18.3
 pyparsing==2.3.1
 python-dateutil==2.7.5
 pytz==2018.9
